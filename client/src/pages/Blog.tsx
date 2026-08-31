@@ -26,23 +26,23 @@ export const Blog: React.FC = () => {
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="text-center mb-10">
-        <div className="inline-flex p-3 rounded-2xl bg-[#FF8C00]/10 text-[#FF8C00] mb-3">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+      <div className="text-center space-y-2">
+        <div className="inline-flex p-3 rounded-2xl bg-orange-100 text-[#FF8C00]">
           <Newspaper className="w-8 h-8" />
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
-          {language === "am" ? "የኢትዮጵያ የመኪና ገበያ ዜናዎች እና መመሪያዎች" : "Ethiopian Automotive News & Insights"}
+        <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
+          {language === "am" ? "?????? ???? ??? ???? ?? ??????" : "Ethiopian Automotive News & Insights"}
         </h1>
-        <p className="text-xs text-gray-400 max-w-lg mx-auto mt-1">
+        <p className="text-xs text-slate-500 max-w-lg mx-auto">
           {language === "am"
-            ? "ስለ ኤሌክትሪክ መኪናዎች፣ የቀረጥ ማሻሻያ እና የስም ዝውውር መመሪያዎች ወቅታዊ መረጃዎች"
+            ? "?? ?????? ?????? ???? ???? ?? ??? ???? ?????? ???? ?????"
             : "Stay updated on EV tax exemptions, customs tariffs, Addis Ababa vehicle regulations, and car care."}
         </p>
       </div>
 
       {loading ? (
-        <div className="text-center py-20 text-xs text-gray-400">Loading articles...</div>
+        <div className="text-center py-20 text-xs text-slate-400">Loading articles...</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {blogs.map(blog => {
@@ -53,22 +53,22 @@ export const Blog: React.FC = () => {
             return (
               <article
                 key={blog.id}
-                className="group flex flex-col bg-[#111827] border border-gray-800 rounded-3xl overflow-hidden shadow-lg hover:border-[#FF8C00]/40 transition"
+                className="group flex flex-col bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xs hover:shadow-xl hover:border-orange-400/80 transition"
               >
-                <div className="relative h-48 overflow-hidden bg-gray-900">
+                <div className="relative h-48 overflow-hidden bg-slate-100">
                   <img
                     src={blog.image}
                     alt={title}
                     className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                   />
-                  <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-gray-950/80 backdrop-blur-md text-[10px] font-bold text-[#FF8C00]">
+                  <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-md text-[10px] font-bold text-orange-600 shadow-xs">
                     {language === "am" && blog.categoryAm ? blog.categoryAm : blog.category}
                   </div>
                 </div>
 
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div>
-                    <div className="flex items-center gap-3 text-[11px] text-gray-400 mb-2">
+                    <div className="flex items-center gap-3 text-[11px] text-slate-400 mb-2">
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3 h-3 text-[#FF8C00]" />
                         <span>{blog.publishedAt}</span>
@@ -80,27 +80,27 @@ export const Blog: React.FC = () => {
                     </div>
 
                     <Link to={`/blog/${blog.slug}`}>
-                      <h3 className="text-base font-bold text-white group-hover:text-[#FF8C00] transition line-clamp-2">
+                      <h3 className="text-base font-bold text-slate-900 group-hover:text-[#FF8C00] transition line-clamp-2">
                         {title}
                       </h3>
                     </Link>
 
-                    <p className="text-xs text-gray-400 leading-relaxed mt-2 line-clamp-3">
+                    <p className="text-xs text-slate-500 leading-relaxed mt-2 line-clamp-3">
                       {summary}
                     </p>
                   </div>
 
-                  <div className="pt-4 border-t border-gray-800 flex items-center justify-between">
-                    <span className="text-xs text-gray-400 flex items-center gap-1.5">
-                      <User className="w-3.5 h-3.5 text-gray-500" />
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <span className="text-xs text-slate-600 flex items-center gap-1.5">
+                      <User className="w-3.5 h-3.5 text-slate-400" />
                       <span>{author}</span>
                     </span>
 
                     <Link
                       to={`/blog/${blog.slug}`}
-                      className="inline-flex items-center gap-1 text-xs font-bold text-[#FF8C00] hover:underline"
+                      className="inline-flex items-center gap-1 text-xs font-bold text-orange-600 hover:underline"
                     >
-                      <span>{language === "am" ? "ሙሉውን አንብብ" : "Read Article"}</span>
+                      <span>{language === "am" ? "???? ????" : "Read Article"}</span>
                       <ChevronRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>

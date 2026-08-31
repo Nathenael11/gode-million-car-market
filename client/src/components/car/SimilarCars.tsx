@@ -14,13 +14,13 @@ export const SimilarCars: React.FC<SimilarCarsProps> = ({ cars, currentCarId }) 
   if (similar.length === 0) return null;
 
   return (
-    <div className="mt-16 pt-12 border-t border-gray-800">
+    <div className="mt-16 pt-12 border-t border-slate-200">
       <div className="mb-6">
-        <h2 className="text-xl font-bold text-white">
-          {language === "am" ? "ተመሳሳይ መኪኖች" : "Similar Vehicles in Showroom"}
+        <h2 className="text-xl font-bold text-slate-900">
+          {language === "am" ? "????? ????" : "Similar Vehicles in Showroom"}
         </h2>
-        <p className="text-xs text-gray-400">
-          {language === "am" ? "በአማራጭነት ሊመለከቷቸው የሚችሉ መኪኖች" : "Alternative recommended options in Bole Rwanda"}
+        <p className="text-xs text-slate-500">
+          {language === "am" ? "??????? ??????? ???? ????" : "Alternative recommended options in Bole Rwanda"}
         </p>
       </div>
 

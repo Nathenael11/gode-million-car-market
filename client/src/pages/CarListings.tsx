@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { LayoutGrid, List, ArrowUpDown } from "lucide-react";
+import { LayoutGrid, List, SlidersHorizontal, Car, Sparkles } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { useWishlist } from "../context/WishlistContext";
 import { CarGrid } from "../components/car/CarGrid";
@@ -9,13 +9,14 @@ import { CarItem } from "../components/car/CarCard";
 import { apiRequest } from "../utils/api";
 
 export const CarListings: React.FC = () => {
-  const { language } = useLanguage();
+  const { t, language } = useLanguage();
   const { wishlist } = useWishlist();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [cars, setCars] = useState<CarItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [mobileFilterOpen, setMobileFilterOpen] = useState<boolean>(false);
 
   const initialFilters: FilterState = {
     search: searchParams.get("search") || "",
@@ -32,45 +33,36 @@ export const CarListings: React.FC = () => {
   };
 
   const [filters, setFilters] = useState<FilterState>(initialFilters);
-  const showWishlistOnly = searchParams.get("wishlist") === "true";
-
-  const fetchCars = async () => {
-    setLoading(true);
-    try {
-      const q = new URLSearchParams();
-      if (filters.search) q.append("search", filters.search);
-      if (filters.make !== "all") q.append("make", filters.make);
-      if (filters.bodyType !== "all") q.append("bodyType", filters.bodyType);
-      if (filters.fuelType !== "all") q.append("fuelType", filters.fuelType);
-      if (filters.transmission !== "all") q.append("transmission", filters.transmission);
-      if (filters.minPrice) q.append("minPrice", filters.minPrice);
-      if (filters.maxPrice) q.append("maxPrice", filters.maxPrice);
-      if (filters.sort) q.append("sort", filters.sort);
-
-      const res = await apiRequest(`/cars?${q.toString()}`);
-      if (res.success && res.data) {
-        let results: CarItem[] = res.data;
-        if (showWishlistOnly) {
-          results = results.filter(c => wishlist.includes(c.id));
-        }
-        setCars(results);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const isWishlistView = searchParams.get("wishlist") === "true";
 
   useEffect(() => {
+    const fetchCars = async () => {
+      setLoading(true);
+      try {
+        const query = new URLSearchParams();
+        Object.entries(filters).forEach(([key, val]) => {
+          if (val && val !== "all") query.append(key, val);
+        });
+
+        const res = await apiRequest(`/cars?${query.toString()}`);
+        if (res.success && res.data) {
+          let list = res.data;
+          if (isWishlistView) {
+            list = list.filter((c: CarItem) => wishlist.includes(c.id));
+          }
+          setCars(list);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchCars();
-  }, [filters, showWishlistOnly, wishlist]);
+  }, [filters, isWishlistView, wishlist]);
 
-  const handleFilterChange = (newFilters: FilterState) => {
-    setFilters(newFilters);
-  };
-
-  const handleResetFilters = () => {
+  const handleReset = () => {
     setFilters({
       search: "",
       make: "all",
@@ -84,46 +76,34 @@ export const CarListings: React.FC = () => {
       maxYear: "",
       sort: "newest"
     });
-    setSearchParams({});
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      {/* Header Banner */}
+      <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
-            {showWishlistOnly
-              ? (language === "am" ? "የወደዷቸው መኪኖች ዝርዝር" : "Your Saved Wishlist")
-              : (language === "am" ? "የመኪና ሽያጭ ዝርዝር" : "Available Car Inventory")}
+          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#FF8C00] uppercase tracking-wider mb-1">
+            <Car className="w-3.5 h-3.5" />
+            <span>{isWishlistView ? "Saved Vehicles" : "Showroom Inventory"}</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
+            {isWishlistView
+              ? (language === "am" ? "????? ???? ????" : "My Saved Wishlist")
+              : (language === "am" ? "?????? ?? ????" : "Available Vehicles in Addis Ababa")}
           </h1>
-          <p className="text-xs text-gray-400 mt-1">
-            {language === "am"
-              ? "በቦሌ ሩዋንዳ ሾውሩም ያሉ የተረጋገጡ መኪኖች"
-              : "Explore verified Ethiopian listings with transparent ETB pricing in Bole Rwanda"}
+          <p className="text-xs text-slate-500 mt-1">
+            {cars.length} {cars.length === 1 ? "vehicle available" : "vehicles available"} in Bole Rwanda Showroom
           </p>
         </div>
 
+        {/* View Mode & Sort */}
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 text-xs text-gray-300">
-            <ArrowUpDown className="w-3.5 h-3.5 text-[#FF8C00]" />
-            <select
-              value={filters.sort}
-              onChange={e => handleFilterChange({ ...filters, sort: e.target.value })}
-              className="px-3 py-2 rounded-xl bg-gray-900 border border-gray-800 text-xs text-white focus:outline-none focus:border-[#FF8C00]"
-            >
-              <option value="newest">{language === "am" ? "አዳዲስ የተጨመሩ" : "Recently Added"}</option>
-              <option value="price_asc">{language === "am" ? "ዋጋ፡ ከዝቅተኛ ወደ ከፍተኛ" : "Price: Low to High"}</option>
-              <option value="price_desc">{language === "am" ? "ዋጋ፡ ከከፍተኛ ወደ ዝቅተኛ" : "Price: High to Low"}</option>
-              <option value="year_desc">{language === "am" ? "ዓ.ም፡ አዲስ" : "Year: Newest"}</option>
-              <option value="mileage_asc">{language === "am" ? "ኪ.ሜ፡ ዝቅተኛ" : "Mileage: Lowest"}</option>
-            </select>
-          </div>
-
-          <div className="flex items-center p-1 bg-gray-900 border border-gray-800 rounded-xl">
+          <div className="flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200">
             <button
               onClick={() => setViewMode("grid")}
-              className={`p-1.5 rounded-lg transition ${
-                viewMode === "grid" ? "bg-[#FF8C00] text-gray-950 font-bold" : "text-gray-400 hover:text-white"
+              className={`p-2 rounded-lg transition ${
+                viewMode === "grid" ? "bg-white text-slate-900 shadow-xs" : "text-slate-500 hover:text-slate-900"
               }`}
               title="Grid View"
             >
@@ -131,30 +111,53 @@ export const CarListings: React.FC = () => {
             </button>
             <button
               onClick={() => setViewMode("list")}
-              className={`p-1.5 rounded-lg transition ${
-                viewMode === "list" ? "bg-[#FF8C00] text-gray-950 font-bold" : "text-gray-400 hover:text-white"
+              className={`p-2 rounded-lg transition ${
+                viewMode === "list" ? "bg-white text-slate-900 shadow-xs" : "text-slate-500 hover:text-slate-900"
               }`}
               title="List View"
             >
               <List className="w-4 h-4" />
             </button>
           </div>
+
+          <button
+            onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
+            className="lg:hidden flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800"
+          >
+            <SlidersHorizontal className="w-3.5 h-3.5" />
+            <span>Filters</span>
+          </button>
         </div>
       </div>
 
+      {/* Main Content Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        <aside className="lg:col-span-4 xl:col-span-3">
+        {/* Desktop Filter Sidebar */}
+        <aside className="hidden lg:block lg:col-span-3 sticky top-24">
           <CarFilter
             filters={filters}
-            onChange={handleFilterChange}
-            onReset={handleResetFilters}
-            totalResults={cars.length}
+            setFilters={setFilters}
+            onReset={handleReset}
+            resultsCount={cars.length}
           />
         </aside>
 
-        <main className="lg:col-span-8 xl:col-span-9">
+        {/* Mobile Filter Modal */}
+        {mobileFilterOpen && (
+          <div className="lg:hidden col-span-12">
+            <CarFilter
+              filters={filters}
+              setFilters={setFilters}
+              onReset={handleReset}
+              resultsCount={cars.length}
+            />
+          </div>
+        )}
+
+        {/* Vehicle Grid / List */}
+        <div className="lg:col-span-9">
           <CarGrid cars={cars} loading={loading} viewMode={viewMode} />
-        </main>
+        </div>
       </div>
     </div>
   );

@@ -8,12 +8,9 @@ import {
   Scale,
   User,
   Shield,
-  PhoneCall,
   Car,
-  Calculator,
-  Newspaper,
-  Handshake,
-  LogOut
+  LogOut,
+  Sparkles
 } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 import { useAuth } from "../../context/AuthContext";
@@ -44,30 +41,30 @@ export const Navbar: React.FC = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-gray-800 bg-[#0B0F17]/90 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-200/90 bg-white/95 backdrop-blur-md shadow-xs">
       {/* Top utility ticker bar */}
-      <div className="hidden lg:flex items-center justify-between px-6 py-1.5 text-xs text-gray-400 bg-gray-950/70 border-b border-gray-800/60">
+      <div className="hidden lg:flex items-center justify-between px-6 py-1.5 text-xs text-slate-600 bg-slate-100/80 border-b border-slate-200/60">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-1.5">
-            <span className="text-sm">📍</span>
-            <span className="text-gray-300 font-medium">Bole Rwanda, Addis Ababa, Ethiopia 🇪🇹</span>
+            <span className="text-sm">??</span>
+            <span className="text-slate-800 font-semibold">Bole Rwanda, Addis Ababa, Ethiopia ????</span>
           </div>
-          <div className="flex items-center gap-1.5 text-[#FF8C00]">
-            <span className="font-semibold">📞 Hotline:</span>
-            <a href="tel:+251911223344" className="hover:underline font-mono font-medium">+251-91-122-3344</a>
+          <div className="flex items-center gap-1.5 text-orange-600 font-semibold">
+            <span>?? Hotline:</span>
+            <a href="tel:+251911223344" className="hover:underline font-mono">+251-91-122-3344</a>
           </div>
-          <div className="text-gray-400">
-            ⏰ Mon - Sat: 8:30 AM - 6:30 PM
+          <div className="text-slate-500">
+            ? Mon - Sat: 8:30 AM - 6:30 PM (EAT)
           </div>
         </div>
 
         <div className="flex items-center gap-4">
-          <span className="inline-flex items-center gap-1 text-emerald-400 font-medium">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>EV Zero Duty Active</span>
+          <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-semibold text-[11px] border border-emerald-200">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>EV Zero Duty Active ?</span>
           </span>
-          <span className="text-gray-600">|</span>
-          <span className="text-gray-300 font-mono">Telebirr &amp; CBE Birr Direct</span>
+          <span className="text-slate-300">|</span>
+          <span className="text-slate-700 font-mono font-medium">Telebirr &amp; CBE Birr Accepted</span>
         </div>
       </div>
 
@@ -76,18 +73,18 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center justify-between h-20">
           {/* Brand Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#FF8C00] to-[#E07B00] p-0.5 shadow-lg shadow-orange-500/20 group-hover:scale-105 transition-transform">
-              <div className="w-full h-full bg-[#0B0F17] rounded-[10px] flex items-center justify-center">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#FF8C00] to-[#EA580C] p-0.5 shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform">
+              <div className="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
                 <Car className="w-6 h-6 text-[#FF8C00]" />
               </div>
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-lg sm:text-xl text-white tracking-tight">GODE &amp; MILLION</span>
-                <span className="text-xs px-1.5 py-0.5 rounded bg-[#FF8C00]/20 text-[#FF8C00] font-bold">🇪🇹</span>
+                <span className="font-extrabold text-lg sm:text-xl text-slate-900 tracking-tight">GODE &amp; MILLION</span>
+                <span className="text-xs px-1.5 py-0.5 rounded bg-orange-100 text-orange-800 font-bold">????</span>
               </div>
-              <span className="text-xs text-[#FF8C00] font-semibold -mt-0.5">
-                {language === "am" ? "የመኪና መሸጫ ማዕከል" : "Car Market • Bole Rwanda"}
+              <span className="text-xs text-orange-600 font-semibold -mt-0.5">
+                {language === "am" ? "???? ??? ????" : "Car Market � Bole Rwanda"}
               </span>
             </div>
           </Link>
@@ -98,10 +95,10 @@ export const Navbar: React.FC = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                className={`px-3 py-2 rounded-xl text-xs font-bold transition-all ${
                   isActive(link.path)
-                    ? "bg-[#FF8C00]/15 text-[#FF8C00]"
-                    : "text-gray-300 hover:text-white hover:bg-gray-800/60"
+                    ? "bg-orange-50 text-[#FF8C00] shadow-xs"
+                    : "text-slate-700 hover:text-[#FF8C00] hover:bg-slate-100"
                 }`}
               >
                 {link.label}
@@ -109,17 +106,17 @@ export const Navbar: React.FC = () => {
             ))}
           </nav>
 
-          {/* Right Actions: Compare, Wishlist, Language, Post Car, User */}
+          {/* Right Actions */}
           <div className="hidden md:flex items-center space-x-3">
             {/* Compare */}
             <Link
               to="/compare"
-              className="relative p-2.5 rounded-xl bg-gray-900 border border-gray-800 text-gray-300 hover:text-[#FF8C00] hover:border-[#FF8C00]/30 transition"
+              className="relative p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 hover:text-[#FF8C00] hover:bg-orange-50 transition shadow-xs"
               title="Compare Cars"
             >
               <Scale className="w-4 h-4" />
               {compareList.length > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#FF8C00] text-gray-950 text-[10px] font-bold flex items-center justify-center">
+                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#FF8C00] text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
                   {compareList.length}
                 </span>
               )}
@@ -128,12 +125,12 @@ export const Navbar: React.FC = () => {
             {/* Wishlist */}
             <Link
               to="/inventory?wishlist=true"
-              className="relative p-2.5 rounded-xl bg-gray-900 border border-gray-800 text-gray-300 hover:text-[#FF8C00] hover:border-[#FF8C00]/30 transition"
+              className="relative p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 hover:text-red-500 hover:bg-red-50 transition shadow-xs"
               title="Wishlist"
             >
               <Heart className="w-4 h-4" />
               {wishlist.length > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center">
+                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
                   {wishlist.length}
                 </span>
               )}
@@ -145,7 +142,7 @@ export const Navbar: React.FC = () => {
             {/* Post Car CTA */}
             <Link
               to="/sell"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#FF8C00] to-[#E07B00] text-gray-950 font-bold text-xs shadow-md shadow-orange-500/20 hover:brightness-110 transition"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#FF8C00] to-[#EA580C] text-white font-bold text-xs shadow-md shadow-orange-500/25 hover:brightness-105 transition"
             >
               <PlusCircle className="w-4 h-4" />
               <span>{t.navSellCar}</span>
@@ -156,28 +153,28 @@ export const Navbar: React.FC = () => {
               <div className="relative">
                 <button
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2 p-1.5 pr-3 rounded-xl bg-gray-900 border border-gray-800 hover:border-gray-700 transition"
+                  className="flex items-center gap-2 p-1.5 pr-3 rounded-xl bg-slate-100 border border-slate-200 hover:border-slate-300 transition"
                 >
                   <img
                     src={user.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${user.name}&backgroundColor=ff8c00`}
                     alt={user.name}
                     className="w-7 h-7 rounded-lg object-cover"
                   />
-                  <span className="text-xs font-semibold text-gray-200 max-w-[100px] truncate">
+                  <span className="text-xs font-semibold text-slate-800 max-w-[100px] truncate">
                     {language === "am" ? user.nameAm || user.name : user.name}
                   </span>
                 </button>
 
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 rounded-xl bg-gray-900 border border-gray-800 shadow-2xl py-1 z-50 animate-fade-in">
-                    <div className="px-3 py-2 border-b border-gray-800">
-                      <p className="text-xs font-bold text-white">{user.name}</p>
-                      <p className="text-[10px] text-[#FF8C00] uppercase font-semibold">{user.role}</p>
+                  <div className="absolute right-0 mt-2 w-48 rounded-2xl bg-white border border-slate-200 shadow-xl py-1 z-50 animate-fade-in">
+                    <div className="px-3 py-2 border-b border-slate-100">
+                      <p className="text-xs font-bold text-slate-900">{user.name}</p>
+                      <p className="text-[10px] text-orange-600 uppercase font-semibold">{user.role}</p>
                     </div>
                     <Link
                       to="/dashboard"
                       onClick={() => setUserDropdownOpen(false)}
-                      className="flex items-center gap-2 px-3 py-2 text-xs text-gray-300 hover:bg-gray-800 hover:text-white"
+                      className="flex items-center gap-2 px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-orange-600"
                     >
                       <User className="w-3.5 h-3.5" />
                       <span>{t.navDashboard}</span>
@@ -186,7 +183,7 @@ export const Navbar: React.FC = () => {
                       <Link
                         to="/admin"
                         onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2 px-3 py-2 text-xs text-orange-400 hover:bg-gray-800"
+                        className="flex items-center gap-2 px-3 py-2 text-xs text-orange-600 hover:bg-orange-50 font-semibold"
                       >
                         <Shield className="w-3.5 h-3.5" />
                         <span>{t.navAdmin}</span>
@@ -197,7 +194,7 @@ export const Navbar: React.FC = () => {
                         logout();
                         setUserDropdownOpen(false);
                       }}
-                      className="w-full flex items-center gap-2 px-3 py-2 text-xs text-red-400 hover:bg-gray-800"
+                      className="w-full flex items-center gap-2 px-3 py-2 text-xs text-red-600 hover:bg-red-50"
                     >
                       <LogOut className="w-3.5 h-3.5" />
                       <span>{t.navLogout}</span>
@@ -208,7 +205,7 @@ export const Navbar: React.FC = () => {
             ) : (
               <Link
                 to="/login"
-                className="px-3.5 py-2 rounded-xl bg-gray-900 border border-gray-800 text-xs font-semibold text-gray-200 hover:text-white hover:border-gray-700 transition"
+                className="px-3.5 py-2 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800 hover:text-[#FF8C00] hover:bg-slate-200/80 transition"
               >
                 {t.navLogin}
               </Link>
@@ -220,7 +217,7 @@ export const Navbar: React.FC = () => {
             <LanguageToggle />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl bg-gray-900 border border-gray-800 text-gray-300 hover:text-white"
+              className="p-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -230,43 +227,43 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile drawer menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-800 bg-[#0B0F17] px-4 pt-3 pb-6 space-y-2">
+        <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-lg">
           {navLinks.map(link => (
             <Link
               key={link.path}
               to={link.path}
               onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-2.5 rounded-xl text-sm font-medium ${
+              className={`block px-4 py-2.5 rounded-xl text-sm font-semibold ${
                 isActive(link.path)
-                  ? "bg-[#FF8C00]/15 text-[#FF8C00] font-bold"
-                  : "text-gray-300 hover:bg-gray-900"
+                  ? "bg-orange-50 text-[#FF8C00] font-bold"
+                  : "text-slate-700 hover:bg-slate-100"
               }`}
             >
               {link.label}
             </Link>
           ))}
 
-          <div className="pt-3 border-t border-gray-800 space-y-2">
+          <div className="pt-3 border-t border-slate-200 space-y-2">
             <Link
               to="/sell"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#FF8C00] text-gray-950 font-bold text-sm"
+              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-[#FF8C00] to-[#EA580C] text-white font-bold text-sm shadow-md"
             >
               <PlusCircle className="w-4 h-4" />
               <span>{t.navSellCar}</span>
             </Link>
 
             {user ? (
-              <div className="flex items-center justify-between p-3 rounded-xl bg-gray-900 border border-gray-800">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
                 <Link
                   to="/dashboard"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 text-sm font-semibold text-white"
+                  className="flex items-center gap-2 text-sm font-semibold text-slate-900"
                 >
                   <User className="w-4 h-4 text-[#FF8C00]" />
-                  <span>{user.name} ({t.navDashboard})</span>
+                  <span>{user.name}</span>
                 </Link>
-                <button onClick={logout} className="text-xs text-red-400 font-medium">
+                <button onClick={logout} className="text-xs text-red-600 font-semibold">
                   {t.navLogout}
                 </button>
               </div>
@@ -274,7 +271,7 @@ export const Navbar: React.FC = () => {
               <Link
                 to="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block text-center py-2.5 rounded-xl bg-gray-900 border border-gray-800 text-sm font-semibold text-gray-200"
+                className="block text-center py-2.5 rounded-xl bg-slate-100 border border-slate-200 text-sm font-bold text-slate-800"
               >
                 {t.navLogin}
               </Link>

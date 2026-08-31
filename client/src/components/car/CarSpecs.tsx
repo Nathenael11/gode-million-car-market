@@ -8,8 +8,7 @@ import {
   Settings2,
   Shield,
   Layers,
-  Sparkles,
-  MapPin
+  Sparkles
 } from "lucide-react";
 import { formatKM } from "../../utils/formatters";
 
@@ -42,17 +41,17 @@ export const CarSpecs: React.FC<CarSpecsProps> = ({ car }) => {
   return (
     <div className="space-y-8">
       {/* Spec Grid */}
-      <div className="bg-[#111827] border border-gray-800 rounded-2xl p-6 shadow-xl">
-        <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
+      <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs">
+        <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
           <Settings2 className="w-4 h-4 text-[#FF8C00]" />
-          <span>{language === "am" ? "የቴክኒክ ዝርዝር መግለጫ" : "Technical Specifications"}</span>
+          <span>{language === "am" ? "????? ???? ????" : "Technical Specifications"}</span>
         </h3>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
           {specRows.map((item, idx) => (
-            <div key={idx} className="p-3 rounded-xl bg-gray-900/70 border border-gray-800/80">
-              <span className="text-[11px] text-gray-400 block mb-0.5">{item.label}</span>
-              <span className="text-xs sm:text-sm font-semibold text-white truncate block">{item.value}</span>
+            <div key={idx} className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
+              <span className="text-[11px] font-semibold text-slate-500 block mb-0.5">{item.label}</span>
+              <span className="text-xs sm:text-sm font-bold text-slate-900 truncate block">{item.value}</span>
             </div>
           ))}
         </div>
@@ -60,16 +59,16 @@ export const CarSpecs: React.FC<CarSpecsProps> = ({ car }) => {
 
       {/* Features & Options */}
       {features.length > 0 && (
-        <div className="bg-[#111827] border border-gray-800 rounded-2xl p-6 shadow-xl">
-          <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
+        <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs">
+          <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-[#FF8C00]" />
             <span>{t.specFeatures}</span>
           </h3>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {features.map((feat, idx) => (
-              <div key={idx} className="flex items-center gap-2.5 text-xs text-gray-300">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#FF8C00]" />
+              <div key={idx} className="flex items-center gap-2.5 text-xs text-slate-700 font-medium">
+                <span className="w-2 h-2 rounded-full bg-[#FF8C00]" />
                 <span>{feat}</span>
               </div>
             ))}
@@ -78,11 +77,11 @@ export const CarSpecs: React.FC<CarSpecsProps> = ({ car }) => {
       )}
 
       {/* Overview Description */}
-      <div className="bg-[#111827] border border-gray-800 rounded-2xl p-6 shadow-xl">
-        <h3 className="text-base font-bold text-white mb-3">
+      <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xs">
+        <h3 className="text-base font-bold text-slate-900 mb-3">
           {t.specDescription}
         </h3>
-        <p className="text-sm leading-relaxed text-gray-300 whitespace-pre-line">
+        <p className="text-sm leading-relaxed text-slate-600 whitespace-pre-line">
           {language === "am" && car.descriptionAm ? car.descriptionAm : car.description}
         </p>
       </div>

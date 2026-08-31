@@ -72,17 +72,17 @@ export const CarDetail: React.FC = () => {
     return (
       <div className="max-w-7xl mx-auto px-4 py-20 text-center">
         <div className="w-12 h-12 rounded-full border-4 border-[#FF8C00] border-t-transparent animate-spin mx-auto mb-4" />
-        <p className="text-xs text-gray-400">Loading car details...</p>
+        <p className="text-xs text-slate-500">Loading car details...</p>
       </div>
     );
   }
 
   if (!car) {
     return (
-      <div className="max-w-md mx-auto my-20 p-8 rounded-3xl bg-[#111827] border border-gray-800 text-center space-y-4">
-        <h2 className="text-xl font-bold text-white">Car Not Found</h2>
-        <p className="text-xs text-gray-400">The vehicle you are looking for is no longer available.</p>
-        <Link to="/inventory" className="inline-block px-5 py-2.5 rounded-xl bg-[#FF8C00] text-gray-950 font-bold text-xs">
+      <div className="max-w-md mx-auto my-20 p-8 rounded-3xl bg-white border border-slate-200 text-center space-y-4 shadow-sm">
+        <h2 className="text-xl font-bold text-slate-900">Car Not Found</h2>
+        <p className="text-xs text-slate-500">The vehicle you are looking for is no longer available.</p>
+        <Link to="/inventory" className="inline-block px-5 py-2.5 rounded-xl bg-[#FF8C00] text-white font-bold text-xs">
           Back to Listings
         </Link>
       </div>
@@ -99,10 +99,10 @@ export const CarDetail: React.FC = () => {
       <div className="mb-6">
         <Link
           to="/inventory"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-400 hover:text-[#FF8C00] transition"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-[#FF8C00] transition"
         >
           <ChevronLeft className="w-4 h-4" />
-          <span>{language === "am" ? "ወደ መኪና ዝርዝር ተመለስ" : "Back to All Listings"}</span>
+          <span>{language === "am" ? "?? ??? ???? ????" : "Back to All Listings"}</span>
         </Link>
       </div>
 
@@ -111,17 +111,17 @@ export const CarDetail: React.FC = () => {
         <div className="lg:col-span-8 space-y-8">
           <CarGallery images={car.images} title={displayTitle} />
 
-          <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-[#111827] border border-gray-800">
+          <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-xs">
             <div className="flex items-center gap-2">
               {car.isComingSoon && <EthiopianBadge type="comingSoon" />}
               {car.fuelType === "Electric" && <EthiopianBadge type="dutyFree" />}
               <EthiopianBadge type="verified" />
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
               <button
                 onClick={() => setQrOpen(true)}
-                className="p-2.5 rounded-xl bg-gray-900 border border-gray-800 text-gray-300 hover:text-[#FF8C00] transition"
+                className="p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 hover:text-[#FF8C00] hover:bg-orange-50 transition"
                 title="Generate QR Code"
               >
                 <QrCode className="w-4 h-4" />
@@ -131,8 +131,8 @@ export const CarDetail: React.FC = () => {
                 onClick={() => toggleWishlist(car.id)}
                 className={`p-2.5 rounded-xl border transition ${
                   wishlisted
-                    ? "bg-red-500/20 border-red-500 text-red-400"
-                    : "bg-gray-900 border-gray-800 text-gray-300 hover:text-white"
+                    ? "bg-red-50 border-red-200 text-red-500"
+                    : "bg-slate-100 border-slate-200 text-slate-700 hover:text-red-500 hover:bg-red-50"
                 }`}
                 title="Save Wishlist"
               >
@@ -143,8 +143,8 @@ export const CarDetail: React.FC = () => {
                 onClick={() => (compared ? removeFromCompare(car.id) : addToCompare(car.id))}
                 className={`p-2.5 rounded-xl border transition ${
                   compared
-                    ? "bg-[#FF8C00]/20 border-[#FF8C00] text-[#FF8C00]"
-                    : "bg-gray-900 border-gray-800 text-gray-300 hover:text-white"
+                    ? "bg-orange-50 border-orange-200 text-orange-600 font-bold"
+                    : "bg-slate-100 border-slate-200 text-slate-700 hover:text-orange-600 hover:bg-orange-50"
                 }`}
                 title="Compare"
               >
@@ -160,38 +160,36 @@ export const CarDetail: React.FC = () => {
 
         {/* Right Side Sticky Action Sidebar (4 cols) */}
         <aside className="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
-          <div className="p-6 rounded-3xl bg-[#111827] border border-gray-800 shadow-2xl space-y-5">
+          <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-5">
             <div>
-              <span className="text-xs font-semibold text-[#FF8C00] uppercase tracking-wider">
-                {car.make} • {car.year}
+              <span className="text-xs font-bold text-orange-600 uppercase tracking-wider">
+                {car.make} � {car.year}
               </span>
-              <h1 className="text-xl sm:text-2xl font-extrabold text-white mt-0.5">
+              <h1 className="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">
                 {displayTitle}
               </h1>
-              <p className="flex items-center gap-1 text-xs text-gray-400 mt-1.5">
-                <MapPin className="w-3.5 h-3.5 text-gray-500" />
+              <p className="flex items-center gap-1 text-xs text-slate-500 mt-1.5 font-medium">
+                <MapPin className="w-3.5 h-3.5 text-slate-400" />
                 <span>{language === "am" && car.locationAm ? car.locationAm : car.location}</span>
               </p>
             </div>
 
-            <div className="pt-4 border-t border-gray-800">
-              <span className="text-xs text-gray-400 block mb-0.5">
-                {language === "am" ? "የመሸጫ ዋጋ" : "Asking Price"}
+            <div className="pt-4 border-t border-slate-100">
+              <span className="text-xs text-slate-500 block mb-0.5 font-semibold">
+                {language === "am" ? "???? ??" : "Asking Price"}
               </span>
-              <div className="flex items-baseline gap-2">
-                <p className="text-2xl sm:text-3xl font-black text-[#FF8C00] tracking-tight">
-                  {formatETB(car.price)}
-                </p>
-              </div>
-              <span className="text-[11px] text-gray-400">
-                {car.priceNegotiable ? (language === "am" ? "✅ ዋጋው ይነጋገራል" : "✅ Price Negotiable") : "Fixed Showroom Price"}
+              <p className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                {formatETB(car.price)}
+              </p>
+              <span className="text-[11px] text-orange-600 font-bold">
+                {car.priceNegotiable ? (language === "am" ? "? ??? ??????" : "? Price Negotiable") : "Fixed Showroom Price"}
               </span>
             </div>
 
             <div className="space-y-2.5 pt-2">
               <a
                 href={`tel:${sellerPhone.replace(/[\s-]/g, "")}`}
-                className="flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#FF8C00] to-[#E07B00] text-gray-950 font-bold text-sm shadow-xl shadow-orange-500/20 hover:brightness-110 transition"
+                className="flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-[#FF8C00] to-[#EA580C] text-white font-bold text-sm shadow-md shadow-orange-500/25 hover:brightness-105 transition"
               >
                 <Phone className="w-4 h-4" />
                 <span>{t.callSeller} ({sellerPhone})</span>
@@ -199,7 +197,7 @@ export const CarDetail: React.FC = () => {
 
               <button
                 onClick={() => setTestDriveOpen(true)}
-                className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl bg-gray-900 hover:bg-gray-800 text-white font-semibold text-xs border border-gray-700 transition"
+                className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold text-xs border border-slate-200 transition"
               >
                 <Calendar className="w-4 h-4 text-[#FF8C00]" />
                 <span>{t.bookTestDrive}</span>
@@ -207,18 +205,18 @@ export const CarDetail: React.FC = () => {
 
               <button
                 onClick={() => setContactOpen(true)}
-                className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl bg-gray-900 hover:bg-gray-800 text-white font-semibold text-xs border border-gray-700 transition"
+                className="flex items-center justify-center gap-2 w-full py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-900 font-bold text-xs border border-slate-200 transition"
               >
                 <MessageSquare className="w-4 h-4 text-[#FF8C00]" />
-                <span>{language === "am" ? "ጥያቄ ወይም መልእክት ይላኩ" : "Send Showroom Inquiry"}</span>
+                <span>{language === "am" ? "??? ??? ????? ???" : "Send Showroom Inquiry"}</span>
               </button>
 
               <button
                 onClick={() => setFinancingOpen(true)}
-                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-2xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 font-semibold text-xs border border-emerald-500/30 transition"
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-2xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs border border-emerald-200 transition"
               >
-                <Calculator className="w-3.5 h-3.5" />
-                <span>{language === "am" ? "የባንክ ብድር አስላ (CBE / Awash)" : "Calculate Bank Loan (CBE / Awash)"}</span>
+                <Calculator className="w-3.5 h-3.5 text-emerald-600" />
+                <span>{language === "am" ? "???? ??? ??? (CBE / Awash)" : "Calculate Bank Loan (CBE / Awash)"}</span>
               </button>
             </div>
           </div>

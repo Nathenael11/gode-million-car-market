@@ -33,7 +33,7 @@ export const App: React.FC = () => {
         <WishlistProvider>
           <CompareProvider>
             <BrowserRouter>
-              <div className="flex flex-col min-h-screen bg-[#0B0F17] text-gray-100 font-sans selection:bg-[#FF8C00] selection:text-white">
+              <div className="flex flex-col min-h-screen bg-[#F8FAFC] text-slate-900 font-sans selection:bg-[#FF8C00] selection:text-white antialiased">
                 <Navbar />
                 <main className="flex-grow">
                   <Routes>

@@ -6,87 +6,78 @@ export const EthiopianMap: React.FC = () => {
   const { language } = useLanguage();
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-gray-800 bg-[#111827] shadow-xl">
+    <div className="rounded-3xl bg-white border border-slate-200 overflow-hidden shadow-sm">
       <div className="grid grid-cols-1 lg:grid-cols-12">
         {/* Info panel */}
-        <div className="p-6 lg:p-8 lg:col-span-5 flex flex-col justify-between space-y-6">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF8C00]/15 border border-[#FF8C00]/30 text-[#FF8C00] text-xs font-semibold mb-3">
+        <div className="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between space-y-6">
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-bold">
               <MapPin className="w-3.5 h-3.5" />
-              <span>{language === "am" ? "የሾውሩም መገኛ" : "Showroom Location"}</span>
+              <span>{language === "am" ? "????? ????" : "Showroom Location"}</span>
             </div>
-            
-            <h3 className="text-xl lg:text-2xl font-bold text-white mb-2">
-              {language === "am" ? "ጎዴ እና ሚሊየን የመኪና ማዕከል" : "Gode & Million Showroom Hub"}
+
+            <h3 className="text-xl sm:text-2xl font-black text-slate-900 leading-tight">
+              {language === "am" ? "?? ?? ???? ???? ???" : "Gode & Million Car Market"}
             </h3>
-            
-            <p className="text-sm text-gray-400 leading-relaxed mb-6">
+
+            <p className="text-xs text-slate-600 leading-relaxed">
               {language === "am"
-                ? "በአዲስ አበባ ቦሌ ሩዋንዳ፣ ከኤድና ሞል መንገድ አቅራቢያ የሚገኝ ዘመናዊ የሙከራ እና የሽያጭ ማዕከል"
-                : "Located in the vibrant heart of Bole Rwanda, Addis Ababa. Visit us for on-site test drives, technical inspections, and instant transfer consultations."}
+                ? "???? ??? ?? ???? ????? ???? ?? ????? ?????? ???? ????? ????? ?? ???? ?? (Test Drive) ????? ??????"
+                : "Located in the prime automotive district of Bole Rwanda, Addis Ababa. Visit us for walk-in inspections, mechanical verifications, and instant test drives."}
             </p>
 
-            <div className="space-y-3.5 text-sm text-gray-300">
+            <div className="space-y-2.5 pt-2 text-xs text-slate-700">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-gray-800 text-[#FF8C00]">
-                  <MapPin className="w-4 h-4" />
-                </div>
-                <span>Bole Rwanda (Near Rwanda Embassy / Edna Road), Addis Ababa</span>
+                <Navigation className="w-4 h-4 text-[#FF8C00] shrink-0" />
+                <span className="font-semibold">Bole Rwanda, Next to Edna Mall Road, Addis Ababa</span>
               </div>
-
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-gray-800 text-[#FF8C00]">
-                  <Phone className="w-4 h-4" />
-                </div>
-                <span>+251-91-122-3344 / +251-91-234-5678</span>
+                <Phone className="w-4 h-4 text-[#FF8C00] shrink-0" />
+                <span className="font-mono font-bold text-slate-900">+251-91-122-3344 / +251-91-234-5678</span>
               </div>
-
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-gray-800 text-[#FF8C00]">
-                  <Clock className="w-4 h-4" />
-                </div>
-                <span>Mon - Sat: 8:30 AM - 6:30 PM EAT</span>
+                <Clock className="w-4 h-4 text-[#FF8C00] shrink-0" />
+                <span>Monday � Saturday: 8:30 AM � 6:30 PM (EAT)</span>
               </div>
-
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-gray-800 text-emerald-400">
-                  <ShieldCheck className="w-4 h-4" />
-                </div>
-                <span>Free On-Site Parking & Secure Test Track</span>
+              <div className="flex items-center gap-3 text-emerald-700 font-semibold">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                <span>Free On-Site Mechanical Inspection Available</span>
               </div>
             </div>
           </div>
 
-          <a
-            href="https://maps.google.com/?q=Bole+Rwanda+Addis+Ababa+Ethiopia"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#FF8C00] to-[#E07B00] text-gray-950 font-bold text-sm shadow-lg shadow-orange-500/20 hover:brightness-110 transition"
-          >
-            <Navigation className="w-4 h-4" />
-            <span>{language === "am" ? "በጎግል ካርታ አቅጣጫ አሳይ" : "Get Google Maps Directions"}</span>
-          </a>
+          <div className="pt-4 border-t border-slate-100 flex items-center gap-3">
+            <a
+              href="https://maps.google.com/?q=Bole+Rwanda+Addis+Ababa"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#FF8C00] to-[#EA580C] text-white font-bold text-xs shadow-md shadow-orange-500/20 hover:brightness-105 transition flex items-center gap-2"
+            >
+              <Navigation className="w-3.5 h-3.5" />
+              <span>Get Directions</span>
+            </a>
+            <a
+              href="tel:+251911223344"
+              className="px-4 py-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-800 font-bold text-xs hover:bg-slate-200 transition"
+            >
+              Call Showroom
+            </a>
+          </div>
         </div>
 
-        {/* Embedded Interactive Map Frame */}
-        <div className="lg:col-span-7 h-72 lg:h-auto min-h-[320px] relative bg-gray-950">
+        {/* Interactive Google Map Embed */}
+        <div className="lg:col-span-7 h-72 lg:h-auto min-h-[300px] bg-slate-100 relative">
           <iframe
-            title="Gode and Million Car Market Location Map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15762.673809633842!2d38.7758364!3d8.9902641!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b8504f7b60889%3A0x67dbad9b87eb8f16!2sBole%20Rwanda%2C%20Addis%20Ababa!5e0!3m2!1sen!2set!4v1700000000000!5m2!1sen!2set"
-            className="w-full h-full border-0 filter grayscale-[20%] contrast-[110%]"
+            title="Gode & Million Car Market Location"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15762.673891461943!2d38.77723467472855!3d8.995054178553255!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85042ab672eb%3A0x6a0a03beadfa7dc0!2sBole%20Rwanda%2C%20Addis%20Ababa!5e0!3m2!1sen!2set!4v1700000000000!5m2!1sen!2set"
+            width="100%"
+            height="100%"
+            style={{ border: 0, minHeight: "320px" }}
             allowFullScreen={false}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-          ></iframe>
-
-          {/* Floating showroom badge on map */}
-          <div className="absolute top-4 left-4 p-3 bg-[#111827]/90 backdrop-blur-md rounded-xl border border-gray-800 shadow-lg text-xs">
-            <div className="font-bold text-white flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-[#FF8C00] animate-ping"></span>
-              <span>Gode &amp; Million Center 🇪🇹</span>
-            </div>
-            <div className="text-gray-400 mt-0.5">📍 Bole Rwanda, Addis Ababa</div>
-          </div>
+            className="w-full h-full"
+          />
         </div>
       </div>
     </div>
