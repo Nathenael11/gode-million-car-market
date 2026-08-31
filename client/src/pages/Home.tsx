@@ -46,15 +46,7 @@ const AnimatedCarHero: React.FC = () => {
         />
       ))}
 
-      {/* HTML5 video runs silently behind, plays if file is a real car video */}
-      <video
-        autoPlay loop muted playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ opacity: 0.85 }}
-      >
-        <source src="/videos/hero-car.mp4" type="video/mp4" />
-        <source src="/videos/car-road-2.mp4" type="video/mp4" />
-      </video>
+      {/* No local video — videos contained unwanted content. Images only. */}
 
       {/* Speed-lines overlay — creates "driving" feel */}
       <div
