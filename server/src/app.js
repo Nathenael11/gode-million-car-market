@@ -20,7 +20,23 @@ import { serveUploads } from "./config/uploads.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const CLIENT_DIST = path.resolve(__dirname, "../../client/dist");
+
+// Robust multi-path discovery for client/dist
+const possibleDistPaths = [
+  path.resolve(__dirname, "../../client/dist"),
+  path.resolve(process.cwd(), "client/dist"),
+  path.resolve(process.cwd(), "dist"),
+  path.resolve(__dirname, "../client/dist"),
+  path.resolve(__dirname, "../dist")
+];
+
+let CLIENT_DIST = null;
+for (const p of possibleDistPaths) {
+  if (fs.existsSync(path.join(p, "index.html"))) {
+    CLIENT_DIST = p;
+    break;
+  }
+}
 
 const app = express();
 
@@ -49,6 +65,7 @@ app.get("/api/health", (req, res) => {
     status: "ok",
     service: "Gode and Million Car Market API",
     location: "Bole Rwanda, Addis Ababa, Ethiopia",
+    clientMounted: CLIENT_DIST !== null,
     time: new Date().toISOString()
   });
 });
@@ -64,14 +81,32 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/upload", uploadRoutes);
 serveUploads(app);
 
+// Fallback for unknown API routes
 app.all("/api/*", (req, res) => {
-  res.status(404).json({ success: false, message: "Endpoint not found." });
+  res.status(404).json({ success: false, message: "API endpoint not found." });
 });
 
-if (fs.existsSync(CLIENT_DIST)) {
+// Serve frontend static assets & SPA catch-all
+if (CLIENT_DIST) {
+  console.log(`📦 Serving frontend SPA from: ${CLIENT_DIST}`);
   app.use(express.static(CLIENT_DIST));
   app.get("*", (req, res) => {
     res.sendFile(path.join(CLIENT_DIST, "index.html"));
+  });
+} else {
+  console.warn("⚠️ Client dist not found. Please run `npm run build`.");
+  app.get("*", (req, res) => {
+    res.status(200).send(`
+      <!DOCTYPE html>
+      <html>
+        <head><title>Gode and Million Car Market</title></head>
+        <body style="font-family: sans-serif; text-align: center; padding: 50px;">
+          <h2>🚗 Gode and Million Car Market API is Running!</h2>
+          <p>Backend API is active. If the frontend is building, it will appear in a moment.</p>
+          <p><a href="/api/health">Check API Health</a> | <a href="/api/cars">View Cars API</a></p>
+        </body>
+      </html>
+    `);
   });
 }
 
