@@ -1,0 +1,16 @@
+{
+  "short_name": "Gode & Million",
+  "name": "Gode and Million Car Market (ጎዴ እና ሚሊየን የመኪና መሸጫ)",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0B0F17",
+  "theme_color": "#FF8C00",
+  "display": "standalone",
+  "orientation": "portrait"
+}

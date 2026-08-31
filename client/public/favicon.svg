@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <rect width="100" height="100" rx="22" fill="#0B0F17" />
+  <circle cx="50" cy="50" r="44" stroke="#FF8C00" stroke-width="3" stroke-dasharray="6 4" opacity="0.6"/>
+  <!-- Ethiopian flag subtle accents -->
+  <path d="M22 24 H40" stroke="#009A44" stroke-width="3.5" stroke-linecap="round" />
+  <path d="M42 24 H60" stroke="#FED100" stroke-width="3.5" stroke-linecap="round" />
+  <path d="M62 24 H78" stroke="#D80027" stroke-width="3.5" stroke-linecap="round" />
+  <!-- Car silhouette -->
+  <path d="M20 62 L32 46 C35 42 40 40 46 40 H64 C70 40 76 43 80 48 L88 62 H20 Z" fill="url(#tang_grad)" />
+  <circle cx="34" cy="64" r="8" fill="#111827" stroke="#FF8C00" stroke-width="3" />
+  <circle cx="74" cy="64" r="8" fill="#111827" stroke="#FF8C00" stroke-width="3" />
+  <path d="M36 47 H52 V58 H30 Z" fill="#0B0F17" opacity="0.8" />
+  <path d="M56 47 H73 L78 58 H56 Z" fill="#0B0F17" opacity="0.8" />
+  <!-- Text G & M -->
+  <text x="50" y="86" text-anchor="middle" fill="#FFFFFF" font-family="'Noto Sans Ethiopic', sans-serif" font-weight="bold" font-size="12">ጎዴ • ሚሊየን</text>
+  <defs>
+    <linearGradient id="tang_grad" x1="20" y1="40" x2="88" y2="62" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF8C00" />
+      <stop offset="1" stop-color="#E07B00" />
+    </linearGradient>
+  </defs>
+</svg>

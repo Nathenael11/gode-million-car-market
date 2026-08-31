@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gode and Million Car Market | ጎዴ እና ሚሊየን የመኪና መሸጫ - Bole Rwanda, Addis Ababa 🇪🇹</title>
+    <meta name="description" content="Discover premium new and used cars in Addis Ababa, Ethiopia. Gode & Million Car Market in Bole Rwanda offers trusted vehicle inspection, competitive ETB pricing, EV incentives, and flexible financing." />
+    
+    <!-- Open Graph / Facebook / Telegram -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Gode and Million Car Market (ጎዴ እና ሚሊየን የመኪና መሸጫ)" />
+    <meta property="og:description" content="Premier car marketplace in Bole Rwanda, Addis Ababa. Toyota, Hyundai, Isuzu, Volkswagen ID.4 EVs and more with duty paid verification." />
+    <meta property="og:image" content="/favicon.svg" />
+    
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#FF8C00" />
+    
+    <!-- Google Fonts for English and Amharic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-[#0B0F17] text-gray-100 font-sans antialiased min-h-screen selection:bg-[#FF8C00] selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW register failed', err));
+        });
+      }
+    </script>
+  </body>
+</html>

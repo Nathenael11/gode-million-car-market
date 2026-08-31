@@ -1,0 +1,28 @@
+services:
+  # Backend API Web Service
+  - type: web
+    name: gode-million-car-market-api
+    env: node
+    plan: free
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRE
+        value: 30d
+    healthCheckPath: /api/health
+
+  # Frontend Static Site
+  - type: static_site
+    name: gode-million-car-market-web
+    buildCommand: cd client && npm install && npm run build
+    publishPath: client/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
