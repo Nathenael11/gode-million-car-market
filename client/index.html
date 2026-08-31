@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gode and Million Car Market | ጎዴ እና ሚሊየን የመኪና መሸጫ - Bole Rwanda, Addis Ababa 🇪🇹</title>
+    <title>Gode and Million Car Market | ?? ?? ???? ???? ??? - Bole Rwanda, Addis Ababa ????</title>
     <meta name="description" content="Discover premium new and used cars in Addis Ababa, Ethiopia. Gode & Million Car Market in Bole Rwanda offers trusted vehicle inspection, competitive ETB pricing, EV incentives, and flexible financing." />
     
     <!-- Open Graph / Facebook / Telegram -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Gode and Million Car Market (ጎዴ እና ሚሊየን የመኪና መሸጫ)" />
+    <meta property="og:title" content="Gode and Million Car Market (?? ?? ???? ???? ???)" />
     <meta property="og:description" content="Premier car marketplace in Bole Rwanda, Addis Ababa. Toyota, Hyundai, Isuzu, Volkswagen ID.4 EVs and more with duty paid verification." />
     <meta property="og:image" content="/favicon.svg" />
     
@@ -26,7 +26,7 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     <script>
-      if ('serviceWorker' in navigator) {
+      if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW register failed', err));
         });
