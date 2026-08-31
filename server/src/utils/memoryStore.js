@@ -1,18 +1,92 @@
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import { seedUsers, seedCars, seedBlogs, seedPartners, seedTestDrives, seedInquiries } from "../seed/seedData.js";
 
-class MemoryStore {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const DATA_DIR = path.resolve(__dirname, "../../data");
+const DB_FILE = path.join(DATA_DIR, "db.json");
+
+class PersistentStore {
   constructor() {
-    this.users = [...seedUsers];
-    this.cars = [...seedCars];
-    this.blogs = [...seedBlogs];
-    this.partners = [...seedPartners];
-    this.testDrives = [...seedTestDrives];
-    this.inquiries = [...seedInquiries];
+    this.users = [];
+    this.cars = [];
+    this.blogs = [];
+    this.partners = [];
+    this.testDrives = [];
+    this.inquiries = [];
+    this.saveTimeout = null;
+    this.init();
+  }
+
+  init() {
+    try {
+      if (!fs.existsSync(DATA_DIR)) {
+        fs.mkdirSync(DATA_DIR, { recursive: true });
+      }
+
+      if (fs.existsSync(DB_FILE)) {
+        const raw = fs.readFileSync(DB_FILE, "utf-8");
+        const parsed = JSON.parse(raw);
+        this.users = parsed.users && parsed.users.length > 0 ? parsed.users : [...seedUsers];
+        this.cars = parsed.cars && parsed.cars.length > 0 ? parsed.cars : [...seedCars];
+        this.blogs = parsed.blogs && parsed.blogs.length > 0 ? parsed.blogs : [...seedBlogs];
+        this.partners = parsed.partners && parsed.partners.length > 0 ? parsed.partners : [...seedPartners];
+        this.testDrives = parsed.testDrives || [...seedTestDrives];
+        this.inquiries = parsed.inquiries || [...seedInquiries];
+        console.log(`📁 Loaded data from disk: ${this.cars.length} cars, ${this.users.length} users.`);
+      } else {
+        // Seed default database
+        this.users = [...seedUsers];
+        this.cars = [...seedCars];
+        this.blogs = [...seedBlogs];
+        this.partners = [...seedPartners];
+        this.testDrives = [...seedTestDrives];
+        this.inquiries = [...seedInquiries];
+        this.saveNow();
+        console.log(`🌱 Initialized database with default Ethiopian inventory & accounts.`);
+      }
+    } catch (err) {
+      console.warn("⚠️ Database file load error, using initial seed data:", err.message);
+      this.users = [...seedUsers];
+      this.cars = [...seedCars];
+      this.blogs = [...seedBlogs];
+      this.partners = [...seedPartners];
+      this.testDrives = [...seedTestDrives];
+      this.inquiries = [...seedInquiries];
+    }
+  }
+
+  save() {
+    // Debounce disk writes to avoid I/O bottlenecks
+    if (this.saveTimeout) clearTimeout(this.saveTimeout);
+    this.saveTimeout = setTimeout(() => this.saveNow(), 300);
+  }
+
+  saveNow() {
+    try {
+      if (!fs.existsSync(DATA_DIR)) {
+        fs.mkdirSync(DATA_DIR, { recursive: true });
+      }
+      const data = {
+        users: this.users,
+        cars: this.cars,
+        blogs: this.blogs,
+        partners: this.partners,
+        testDrives: this.testDrives,
+        inquiries: this.inquiries,
+        lastUpdated: new Date().toISOString()
+      };
+      fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), "utf-8");
+    } catch (err) {
+      console.error("❌ Failed to persist database to disk:", err.message);
+    }
   }
 
   // Users
   findUserByEmail(email) {
-    return this.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    return this.users.find(u => u.email && u.email.toLowerCase() === email.toLowerCase());
   }
 
   findUserById(id) {
@@ -26,6 +100,7 @@ class MemoryStore {
       ...userData
     };
     this.users.push(newUser);
+    this.save();
     return newUser;
   }
 
@@ -33,6 +108,7 @@ class MemoryStore {
     const idx = this.users.findIndex(u => u.id === id);
     if (idx === -1) return null;
     this.users[idx] = { ...this.users[idx], ...updates, updatedAt: new Date() };
+    this.save();
     return this.users[idx];
   }
 
@@ -40,6 +116,7 @@ class MemoryStore {
     const idx = this.users.findIndex(u => u.id === id);
     if (idx === -1) return false;
     this.users.splice(idx, 1);
+    this.save();
     return true;
   }
 
@@ -139,6 +216,7 @@ class MemoryStore {
     const car = this.cars.find(c => c.id === id);
     if (car) {
       car.viewsCount = (car.viewsCount || 0) + 1;
+      this.save();
     }
     return car;
   }
@@ -151,6 +229,7 @@ class MemoryStore {
       ...carData
     };
     this.cars.unshift(newCar);
+    this.save();
     return newCar;
   }
 
@@ -158,6 +237,7 @@ class MemoryStore {
     const idx = this.cars.findIndex(c => c.id === id);
     if (idx === -1) return null;
     this.cars[idx] = { ...this.cars[idx], ...updates, updatedAt: new Date() };
+    this.save();
     return this.cars[idx];
   }
 
@@ -165,6 +245,7 @@ class MemoryStore {
     const idx = this.cars.findIndex(c => c.id === id);
     if (idx === -1) return false;
     this.cars.splice(idx, 1);
+    this.save();
     return true;
   }
 
@@ -184,6 +265,7 @@ class MemoryStore {
       ...blogData
     };
     this.blogs.unshift(newBlog);
+    this.save();
     return newBlog;
   }
 
@@ -196,6 +278,7 @@ class MemoryStore {
       ...inquiryData
     };
     this.inquiries.unshift(newInquiry);
+    this.save();
     return newInquiry;
   }
 
@@ -209,7 +292,10 @@ class MemoryStore {
 
   updateInquiry(id, status) {
     const item = this.inquiries.find(i => i.id === id);
-    if (item) item.status = status;
+    if (item) {
+      item.status = status;
+      this.save();
+    }
     return item;
   }
 
@@ -222,6 +308,7 @@ class MemoryStore {
       ...data
     };
     this.testDrives.unshift(newTD);
+    this.save();
     return newTD;
   }
 
@@ -231,7 +318,10 @@ class MemoryStore {
 
   updateTestDriveStatus(id, status) {
     const item = this.testDrives.find(t => t.id === id);
-    if (item) item.status = status;
+    if (item) {
+      item.status = status;
+      this.save();
+    }
     return item;
   }
 
@@ -241,4 +331,4 @@ class MemoryStore {
   }
 }
 
-export const memoryStore = new MemoryStore();
+export const memoryStore = new PersistentStore();

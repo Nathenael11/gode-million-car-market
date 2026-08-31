@@ -6,6 +6,7 @@ A professional, bilingual (Amharic & English) full-stack automotive marketplace 
 
 ## ?? Key Highlights & Features
 
+- **Zero-Config Persistent Database**: Built-in file-backed JSON database with automatic seed data & persistent disk sync. **Zero external database setup needed** (no MongoDB Atlas or connection headaches during deployment).
 - **Bilingual (English & ????)**: Instant toggle with comprehensive typography support (`Noto Sans Ethiopic` & `Plus Jakarta Sans`).
 - **Tangerine Theme**: Primary Tangerine (`#FF8C00`), Dark Tangerine (`#E07B00`), Deep Black, and subtle Ethiopian flag accents (Green, Yellow, Red).
 - **Custom Vector Logo**: Dynamic car silhouette + Amharic typography "?? ?? ????" + ???? badge.
@@ -32,13 +33,15 @@ A professional, bilingual (Amharic & English) full-stack automotive marketplace 
 
 ## ?? Default Credentials
 
-- **Admin Portal**: `admin@godemillion.et` / `Admin@123`
-- **Seller Account**: `seller@godemillion.et` / `Seller@123`
-- **Buyer Account**: `buyer@godemillion.et` / `Buyer@123`
+| Role | Email | Password |
+| :--- | :--- | :--- |
+| **Admin** | `admin@godemillion.et` | `Admin@123` |
+| **Seller** | `seller@godemillion.et` | `Seller@123` |
+| **Buyer** | `buyer@godemillion.et` | `Buyer@123` |
 
 ---
 
-## ?? Getting Started
+## ?? Quick Start
 
 ### 1. Start Server
 ```bash
@@ -59,4 +62,8 @@ Client runs at `http://localhost:5173`.
 ---
 
 ## ?? Deployment on Render.com
-Use the included `render.yaml` Blueprint on [Render.com](https://render.com/) for automatic backend and frontend deployment.
+
+This repository is 100% self-contained with zero database configuration needed:
+1. Connect this repo to **Render.com**.
+2. Deploy using the included `render.yaml` Blueprint or create a Web Service for `server` and Static Site for `client`.
+3. It will run immediately with seed data and full persistence!
