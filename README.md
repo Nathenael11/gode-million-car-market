@@ -44,34 +44,6 @@ A professional, bilingual (**Amharic / አማርኛ** & **English**) full-stack 
 | **Seller (Dealer)** | `seller@godemillion.et` | `Seller@123` |
 | **Buyer (Customer)** | `buyer@godemillion.et` | `Buyer@123` |
 
----
-
-## 💻 Local Development
-
-```bash
-# 1. Start Server (Express API + SPA static serve on port 5000)
-cd server
-npm install
-npm start
-
-# 2. Start Client Dev Server (Vite on port 5173)
-cd client
-npm install
-npm run dev
-```
-
-- Local Dev URL: `http://localhost:5173`
-- Local API URL: `http://localhost:5000`
-
----
-
-## ☁️ Deployment on Render
-
-This repository uses a unified single-service architecture.
-1. Create a **Web Service** on [Render.com](https://dashboard.render.com).
-2. Connect `https://github.com/Nathenael11/gode-million-car-market`.
-3. Set **Build Command**: `npm run build` and **Start Command**: `npm start`.
-4. Your application will be live at `https://gode-million-car-market.onrender.com`!
 
 ---
 
