@@ -51,4 +51,4 @@ Open: http://localhost:5173
 
 ---
 
-Built for Bole Rwanda, Addis Ababa, Ethiopia.
+Built for Gode and Million Car Market. Bole Rwanda, Addis Ababa, Ethiopia.
