@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  Search, MapPin, ShieldCheck, Zap, TrendingUp, ChevronRight, Car, Phone, Sparkles
+  Search, MapPin, ShieldCheck, Zap, TrendingUp, ChevronRight, Car, Phone, Eye
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { CarGrid } from "../components/car/CarGrid";
 import { CarItem } from "../components/car/CarCard";
 import { EthiopianMap } from "../components/common/EthiopianMap";
-import { DynamicMovingCar } from "../components/home/DynamicMovingCar";
 import { apiRequest } from "../utils/api";
 
 export const Home: React.FC = () => {
@@ -17,8 +16,10 @@ export const Home: React.FC = () => {
   const [cars, setCars] = useState<CarItem[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [searchMake, setSearchMake] = useState("all");
-  const [searchBody, setSearchBody] = useState("all");
   const [searchFuel, setSearchFuel] = useState("all");
+  const [searchBody, setSearchBody] = useState("all");
+
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     apiRequest("/cars")
@@ -31,8 +32,8 @@ export const Home: React.FC = () => {
     e.preventDefault();
     const params = new URLSearchParams();
     if (searchMake !== "all") params.append("make", searchMake);
-    if (searchBody !== "all") params.append("bodyType", searchBody);
     if (searchFuel !== "all") params.append("fuelType", searchFuel);
+    if (searchBody !== "all") params.append("bodyType", searchBody);
     navigate(`/inventory?${params.toString()}`);
   };
 
@@ -41,135 +42,160 @@ export const Home: React.FC = () => {
   return (
     <div className="space-y-16 pb-20">
 
-      {/* ── Dynamic Moving Car Hero Section ── */}
-      <section className="relative bg-gradient-to-br from-[#FFF9F2] via-white to-[#F8FAFC] border-b border-gray-100 py-10 lg:py-16 overflow-hidden">
-        {/* Ambient background decor */}
-        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[#FF8C00]/5 blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-orange-100/40 blur-2xl translate-y-1/2 -translate-x-1/4 pointer-events-none" />
+      {/* ── Cinematic Real Car Video Background Hero ── */}
+      <section className="relative min-h-[580px] lg:min-h-[640px] flex items-center overflow-hidden bg-slate-950 text-white">
+        
+        {/* Real Moving Car Video Loop in Background */}
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1920&q=80"
+          className="absolute inset-0 w-full h-full object-cover scale-105 filter brightness-90 contrast-105"
+        >
+          <source src="/videos/hero-car.mp4" type="video/mp4" />
+        </video>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative space-y-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        {/* Sophisticated Dark Gradient Overlays for Crisp Text Contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/75 to-slate-950/40 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/40 pointer-events-none" />
+
+        {/* Hero Content Overlay */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 lg:py-20 w-full">
+          <div className="max-w-2xl space-y-6 text-left">
             
-            {/* Left: Headlines, Search Bar & Quick Filters */}
-            <div className="lg:col-span-5 space-y-6 text-left">
-
-              {/* Location Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100/90 border border-orange-200 text-orange-800 text-xs font-bold shadow-xs">
-                <span className="w-2 h-2 rounded-full bg-[#FF8C00] animate-ping" />
-                <MapPin className="w-3.5 h-3.5 text-[#FF8C00]" />
-                <span>
-                  {language === "am"
-                    ? "ቦሌ ሩዋንዳ፣ አዲስ አበባ 🇪🇹"
-                    : "Bole Rwanda, Addis Ababa 🇪🇹"}
-                </span>
-              </div>
-
-              {/* Headline */}
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight tracking-tight">
-                {language === "am" ? (
-                  <>
-                    <span>ህልምዎን </span>
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF8C00] to-[#EA580C]">መኪና</span>
-                    <br />
-                    <span>በቀላሉ ያግኙ</span>
-                  </>
-                ) : (
-                  <>
-                    Find Your Dream
-                    <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF8C00] to-[#EA580C]">Car in Addis</span>
-                  </>
-                )}
-              </h1>
-
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+            {/* Location & Trust Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-orange-400 text-xs font-bold shadow-lg">
+              <span className="w-2 h-2 rounded-full bg-[#FF8C00] animate-ping" />
+              <MapPin className="w-3.5 h-3.5" />
+              <span>
                 {language === "am"
-                  ? "ቀረጥ ነፃ የኤሌክትሪክ መኪናዎች፣ 120-ነጥብ ምርመራ ያለፉ አዳዲስ እና ያገለገሉ ተሽከርካሪዎች — በኢትዮጵያ ብር ግልጽ ዋጋ። ቦሌ ሩዋንዳ ሾውሩም።"
-                  : "Fully inspected new & used vehicles with transparent ETB pricing. Zero-duty EVs, bank loan financing, and instant test drives in Bole Rwanda."}
-              </p>
-
-              {/* Search Form */}
-              <form
-                onSubmit={handleHeroSearch}
-                className="bg-white rounded-2xl border border-gray-200 shadow-md p-1.5 flex flex-col sm:flex-row gap-1.5"
-              >
-                <select
-                  value={searchMake}
-                  onChange={e => setSearchMake(e.target.value)}
-                  className="flex-1 px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-xs font-semibold text-gray-900 focus:outline-none focus:border-[#FF8C00]"
-                >
-                  <option value="all">{t.allMakes}</option>
-                  <option value="Toyota">Toyota (ቶዮታ)</option>
-                  <option value="Hyundai">Hyundai (ሃዩንዳይ)</option>
-                  <option value="Isuzu">Isuzu (ኢሱዙ)</option>
-                  <option value="Volkswagen">Volkswagen</option>
-                  <option value="Suzuki">Suzuki (ሱዙኪ)</option>
-                  <option value="BYD">BYD EV</option>
-                </select>
-
-                <select
-                  value={searchFuel}
-                  onChange={e => setSearchFuel(e.target.value)}
-                  className="flex-1 px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-xs font-semibold text-gray-900 focus:outline-none focus:border-[#FF8C00]"
-                >
-                  <option value="all">{t.allFuelTypes}</option>
-                  <option value="Petrol">Petrol</option>
-                  <option value="Diesel">Diesel</option>
-                  <option value="Electric">⚡ Electric EV</option>
-                </select>
-
-                <button
-                  type="submit"
-                  className="flex items-center justify-center gap-1.5 px-5 py-2.5 bg-[#FF8C00] hover:bg-[#E07B00] text-white font-bold text-xs rounded-xl transition shadow-md shadow-orange-200"
-                >
-                  <Search className="w-4 h-4" />
-                  <span className="whitespace-nowrap">{t.searchButton}</span>
-                </button>
-              </form>
-
-              {/* Quick Tags */}
-              <div className="flex flex-wrap gap-2 pt-1">
-                {[
-                  { label: language === "am" ? "⚡ ቀረጥ ነፃ EV" : "⚡ EV Duty-Free", to: "/inventory?fuelType=Electric", color: "bg-emerald-50 text-emerald-800 border-emerald-300" },
-                  { label: "Toyota Prado", to: "/inventory?make=Toyota", color: "bg-orange-50 text-orange-800 border-orange-200" },
-                  { label: language === "am" ? "✨ አዲስ መኪናዎች" : "✨ Brand New", to: "/inventory?condition=Brand New", color: "bg-blue-50 text-blue-800 border-blue-200" },
-                ].map(q => (
-                  <Link
-                    key={q.label}
-                    to={q.to}
-                    className={`px-3 py-1 rounded-full border text-[11px] font-extrabold transition hover:scale-105 ${q.color}`}
-                  >
-                    {q.label}
-                  </Link>
-                ))}
-              </div>
+                  ? "ቦሌ ሩዋንዳ፣ አዲስ አበባ — ጎዴ እና ሚሊየን 🇪🇹"
+                  : "Bole Rwanda, Addis Ababa — Gode & Million 🇪🇹"}
+              </span>
             </div>
 
-            {/* Right: Dynamic Animated Moving Car Component */}
-            <div className="lg:col-span-7">
-              <DynamicMovingCar />
+            {/* Main Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+              {language === "am" ? (
+                <>
+                  <span>ህልምዎን </span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF8C00] to-[#FDBA74]">መኪና</span>
+                  <br />
+                  <span>በአዲስ አበባ ያግኙ</span>
+                </>
+              ) : (
+                <>
+                  Find Your Dream
+                  <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF8C00] to-[#FDBA74]">Car in Addis</span>
+                </>
+              )}
+            </h1>
+
+            {/* Description */}
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl font-normal">
+              {language === "am"
+                ? "ቀረጥ ነፃ የኤሌክትሪክ መኪናዎች፣ 120-ነጥብ ምርመራ ያለፉ አዳዲስ እና ያገለገሉ ተሽከርካሪዎች — በኢትዮጵያ ብር ግልጽ ዋጋ። የባንክ ብድር ድጋፍ በቦሌ ሩዋንዳ ሾውሩም።"
+                : "Fully inspected new & used vehicles with transparent ETB pricing. Zero-duty EVs, bank loan financing, and instant test drives at our Bole Rwanda showroom."}
+            </p>
+
+            {/* Search Box on Hero */}
+            <form
+              onSubmit={handleHeroSearch}
+              className="bg-white/95 backdrop-blur-md rounded-2xl border border-white/40 shadow-2xl p-2 flex flex-col sm:flex-row gap-2 max-w-xl"
+            >
+              <select
+                value={searchMake}
+                onChange={e => setSearchMake(e.target.value)}
+                className="flex-1 px-3.5 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#FF8C00]"
+              >
+                <option value="all">{t.allMakes}</option>
+                <option value="Toyota">Toyota (ቶዮታ)</option>
+                <option value="Hyundai">Hyundai (ሃዩንዳይ)</option>
+                <option value="Isuzu">Isuzu (ኢሱዙ)</option>
+                <option value="Volkswagen">Volkswagen</option>
+                <option value="Suzuki">Suzuki (ሱዙኪ)</option>
+                <option value="BYD">BYD EV</option>
+              </select>
+
+              <select
+                value={searchFuel}
+                onChange={e => setSearchFuel(e.target.value)}
+                className="flex-1 px-3.5 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-slate-900 focus:outline-none focus:border-[#FF8C00]"
+              >
+                <option value="all">{t.allFuelTypes}</option>
+                <option value="Petrol">Petrol (ቤንዚን)</option>
+                <option value="Diesel">Diesel (ናፍጣ)</option>
+                <option value="Electric">⚡ Electric EV (ቀረጥ ነፃ)</option>
+              </select>
+
+              <button
+                type="submit"
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-[#FF8C00] hover:bg-[#E07B00] text-white font-bold text-xs rounded-xl transition shadow-lg shadow-orange-500/30 shrink-0"
+              >
+                <Search className="w-4 h-4" />
+                <span>{t.searchButton}</span>
+              </button>
+            </form>
+
+            {/* Quick Filter Tags & CTAs */}
+            <div className="flex flex-wrap items-center gap-2.5 pt-2">
+              <Link
+                to="/inventory?fuelType=Electric"
+                className="px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/40 text-emerald-300 text-xs font-bold transition flex items-center gap-1"
+              >
+                <Zap className="w-3.5 h-3.5" />
+                <span>{language === "am" ? "ቀረጥ ነፃ EV" : "EV Duty-Free"}</span>
+              </Link>
+
+              <Link
+                to="/inventory?make=Toyota"
+                className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-slate-200 text-xs font-bold transition"
+              >
+                Toyota Prado
+              </Link>
+
+              <Link
+                to="/inventory?condition=Brand New"
+                className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-slate-200 text-xs font-bold transition"
+              >
+                {language === "am" ? "አዲስ መኪናዎች" : "Brand New"}
+              </Link>
+
+              <a
+                href="tel:+251911223344"
+                className="px-4 py-1.5 rounded-xl bg-[#FF8C00]/20 hover:bg-[#FF8C00]/30 border border-[#FF8C00]/50 text-orange-300 text-xs font-bold transition flex items-center gap-1.5 ml-auto sm:ml-0"
+              >
+                <Phone className="w-3.5 h-3.5" />
+                <span>+251-91-122-3344</span>
+              </a>
             </div>
 
           </div>
+        </div>
 
-          {/* Four Key Value Metric Pillars */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-gray-100">
-            {[
-              { icon: Car, value: "500+", label: language === "am" ? "የተረጋገጡ መኪናዎች" : "Verified Cars", color: "text-[#FF8C00] bg-orange-50" },
-              { icon: ShieldCheck, value: "120", label: language === "am" ? "ነጥብ ምርመራ" : "Point Inspection", color: "text-emerald-600 bg-emerald-50" },
-              { icon: Zap, value: "0%", label: language === "am" ? "EV ቀረጥ ነፃ" : "EV Duty Tax", color: "text-blue-600 bg-blue-50" },
-              { icon: TrendingUp, value: "70%", label: language === "am" ? "ባንክ ብድር" : "Bank Financing", color: "text-violet-600 bg-violet-50" },
-            ].map(stat => (
-              <div key={stat.label} className="p-4 rounded-2xl bg-white border border-gray-200 shadow-xs flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${stat.color}`}>
-                  <stat.icon className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-xl font-black text-gray-900 leading-none">{stat.value}</p>
-                  <p className="text-[11px] text-gray-500 mt-1 leading-tight">{stat.label}</p>
-                </div>
-              </div>
-            ))}
+        {/* Bottom Floating Stats Bar */}
+        <div className="absolute bottom-0 inset-x-0 bg-slate-950/80 backdrop-blur-md border-t border-white/10 py-3 hidden md:block">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 gap-4 text-center">
+            <div className="flex items-center justify-center gap-2">
+              <Car className="w-4 h-4 text-[#FF8C00]" />
+              <span className="text-xs font-bold text-slate-300">500+ {language === "am" ? "የተረጋገጡ መኪኖች" : "Verified Cars"}</span>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <span className="text-xs font-bold text-slate-300">120-Point {language === "am" ? "ምርመራ" : "Inspected"}</span>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <Zap className="w-4 h-4 text-blue-400" />
+              <span className="text-xs font-bold text-slate-300">0% {language === "am" ? "EV ቀረጥ ነፃ" : "EV Duty Tax"}</span>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <TrendingUp className="w-4 h-4 text-orange-400" />
+              <span className="text-xs font-bold text-slate-300">70% {language === "am" ? "የባንክ ብድር" : "Bank Financing"}</span>
+            </div>
           </div>
         </div>
       </section>
@@ -179,12 +205,12 @@ export const Home: React.FC = () => {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h2 className="text-2xl sm:text-3xl font-black text-gray-900">
-              {language === "am" ? "ተለይቶ የቀረቡ መኪናዎች" : "Featured Vehicles"}
+              {language === "am" ? "ተለይተው የቀረቡ መኪናዎች" : "Featured Vehicles"}
             </h2>
             <p className="text-sm text-gray-500 mt-1">
               {language === "am"
-                ? "በሾውሩማችን ታቅፎ የቀረቡ ምርጥ አማራጮች"
-                : "Hand-picked selections from our Bole Rwanda showroom"}
+                ? "በቦሌ ሩዋንዳ ሾውሩማችን ታቅፈው የቀረቡ ምርጥ አማራጮች"
+                : "Hand-picked selections available at our Bole Rwanda showroom"}
             </p>
           </div>
           <Link
@@ -218,7 +244,7 @@ export const Home: React.FC = () => {
             </h2>
             <p className="text-slate-400 text-sm mt-2">
               {language === "am"
-                ? "ለዓመታት አዲስ አበባን ያገለገልን የቦሌ ሩዋንዳ የመኪና ገበያ ላቆናችን"
+                ? "ለዓመታት አዲስ አበባን ያገለገልን የቦሌ ሩዋንዳ የመኪና ገበያ ማዕከል"
                 : "Bole Rwanda's most trusted car marketplace — serving Addis Ababa for over a decade"}
             </p>
           </div>
@@ -242,7 +268,7 @@ export const Home: React.FC = () => {
               {
                 icon: "💰",
                 title: language === "am" ? "ግልጽ የብር ዋጋ" : "Transparent Pricing",
-                desc: language === "am" ? "በኢትዮጵያ ብር ሙሉ ዋጋ ምንም ተደብቆ አለ — ቴሌብር እና ሲቢኢ ብር ተቀባይ" : "Full ETB pricing, no hidden fees — Telebirr & CBE Birr accepted"
+                desc: language === "am" ? "በኢትዮጵያ ብር ሙሉ ዋጋ ምንም ተደብቆ የለም — ቴሌብር እና ሲቢኢ ብር ተቀባይ" : "Full ETB pricing, no hidden fees — Telebirr & CBE Birr accepted"
               },
             ].map(f => (
               <div key={f.title} className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-[#FF8C00]/40 transition">
@@ -264,7 +290,7 @@ export const Home: React.FC = () => {
             </h3>
             <p className="text-orange-100 text-sm mt-1">
               {language === "am"
-                ? "ቦሌ ሩዋንዳ፣ ኤድና ሞል አቅራቢያ — ሰ.ሰ ሰ:30 – 12:30"
+                ? "ቦሌ ሩዋንዳ፣ ኤድና ሞል አቅራቢያ — ሰኞ - ቅዳሜ፡ 8:30 – 18:30"
                 : "Bole Rwanda, Near Edna Mall Road — Mon-Sat 8:30 AM – 6:30 PM"}
             </p>
           </div>
