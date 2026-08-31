@@ -2,7 +2,11 @@
 
 ### Premier Automotive Marketplace — Bole Rwanda, Addis Ababa, Ethiopia
 
-🌐 **Live Application URL**: **[https://gode-million-car-market.onrender.com](https://gode-million-car-market.onrender.com)**
+👨‍💻 **Author & Lead Developer**: **Nathenael Ermais**  
+🌐 **Live Application URL**: **[https://gode-million-car-market.onrender.com](https://gode-million-car-market.onrender.com)**  
+📲 **Mobile QR Code**: Available directly in the app navbar & footer to scan with your phone camera!
+
+---
 
 A professional, bilingual (**Amharic / አማርኛ** & **English**) full-stack car marketplace web application for **Gode and Million Car Market** located in **Bole Rwanda (Near Edna Mall Road), Addis Ababa, Ethiopia**.
 
@@ -18,6 +22,7 @@ A professional, bilingual (**Amharic / አማርኛ** & **English**) full-stack 
 
 ## 🌟 Key Features
 
+- **Instant QR Code Sharing** — Scan with any phone camera to share vehicle listings or the whole showroom immediately.
 - **Zero-Config Persistent Database** — Built-in persistent JSON store with automatic seeding & atomic disk sync. No MongoDB or PostgreSQL connection needed for 1-click cloud deployments.
 - **Direct Camera & Photo Upload** — Admin and sellers can upload photos from phone gallery, local storage, or take instant photos with device camera.
 - **Bilingual Experience** — Instant toggle between English and native Amharic (Ethiopic Ge'ez script).
@@ -47,4 +52,6 @@ A professional, bilingual (**Amharic / አማርኛ** & **English**) full-stack 
 
 ---
 
-*Location: Bole Rwanda, Near Edna Mall Road, Addis Ababa, Ethiopia 🇪🇹*
+### 👨‍💻 Project Credits
+- **Author & Developer**: **Nathenael Ermais**
+- **Dealership Location**: Bole Rwanda, Near Edna Mall Road, Addis Ababa, Ethiopia 🇪🇹

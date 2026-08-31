@@ -2,6 +2,7 @@
   "name": "gode-million-car-market-client",
   "private": true,
   "version": "1.0.0",
+  "author": "Nathenael Ermais",
   "type": "module",
   "scripts": {
     "dev": "vite",
