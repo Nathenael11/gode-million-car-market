@@ -52,15 +52,16 @@ export const Home: React.FC = () => {
           loop
           muted
           playsInline
-          poster="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1920&q=80"
-          className="absolute inset-0 w-full h-full object-cover scale-105 filter brightness-90 contrast-105"
+          poster="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1920&q=80"
+          className="absolute inset-0 w-full h-full object-cover scale-100 filter brightness-100 saturate-110"
         >
+          <source src="/videos/car-road-2.mp4" type="video/mp4" />
           <source src="/videos/hero-car.mp4" type="video/mp4" />
         </video>
 
-        {/* Sophisticated Dark Gradient Overlays for Crisp Text Contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/75 to-slate-950/40 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/40 pointer-events-none" />
+        {/* Subtle Left-Side Text Background — Car is Fully Visible on Right */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/55 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
 
         {/* Hero Content Overlay */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 lg:py-20 w-full">
