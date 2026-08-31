@@ -1,4 +1,10 @@
-import React from "react";
+import fs from 'fs';
+import path from 'path';
+const W = (p, c) => { fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, c, 'utf8'); console.log('Wrote:', path.basename(p)); };
+const B = path.resolve('.');
+
+// Fix Footer - remove unavailable lucide icons
+W(path.join(B, 'client/src/components/common/Footer.tsx'), `import React from "react";
 import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock, Car } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
@@ -128,3 +134,6 @@ export const Footer: React.FC = () => {
     </footer>
   );
 };
+`);
+
+console.log('Footer fixed');

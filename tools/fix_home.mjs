@@ -1,4 +1,10 @@
-import React, { useState, useEffect } from "react";
+import fs from 'fs';
+import path from 'path';
+const W = (p, c) => { fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, c, 'utf8'); console.log('Wrote:', p.slice(p.indexOf('client'))); };
+const B = path.resolve('.');
+
+// ━━ Home page — human, warm, not AI-sounding ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+W(path.join(B, 'client/src/pages/Home.tsx'), `import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Search, MapPin, ShieldCheck, Zap, TrendingUp, ChevronRight, Car, Phone
@@ -32,7 +38,7 @@ export const Home: React.FC = () => {
     if (searchMake !== "all") params.append("make", searchMake);
     if (searchBody !== "all") params.append("bodyType", searchBody);
     if (searchFuel !== "all") params.append("fuelType", searchFuel);
-    navigate(`/inventory?${params.toString()}`);
+    navigate(\`/inventory?\${params.toString()}\`);
   };
 
   const featuredCars = cars.filter(c => c.isFeatured).slice(0, 6);
@@ -147,7 +153,7 @@ export const Home: React.FC = () => {
                   <Link
                     key={q.label}
                     to={q.to}
-                    className={`px-3.5 py-1.5 rounded-full border text-xs font-bold transition hover:scale-105 ${q.color}`}
+                    className={\`px-3.5 py-1.5 rounded-full border text-xs font-bold transition hover:scale-105 \${q.color}\`}
                   >
                     {q.label}
                   </Link>
@@ -164,7 +170,7 @@ export const Home: React.FC = () => {
                 { icon: TrendingUp, value: "70%", label: language === "am" ? "ባንክ ብድር" : "Bank Financing", color: "text-violet-600 bg-violet-50" },
               ].map(stat => (
                 <div key={stat.label} className="p-5 rounded-2xl bg-white border border-gray-100 shadow-xs hover:shadow-sm transition">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${stat.color}`}>
+                  <div className={\`w-10 h-10 rounded-xl flex items-center justify-center mb-3 \${stat.color}\`}>
                     <stat.icon className="w-5 h-5" />
                   </div>
                   <p className="text-2xl font-black text-gray-900">{stat.value}</p>
@@ -295,3 +301,6 @@ export const Home: React.FC = () => {
     </div>
   );
 };
+`);
+
+console.log('Home.tsx written');

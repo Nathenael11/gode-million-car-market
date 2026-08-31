@@ -11,9 +11,9 @@ const startServer = async () => {
   await connectDB();
 
   app.listen(PORT, HOST, () => {
-    console.log(`?? Gode & Million Car Market Server running on http://${HOST}:${PORT}`);
-    console.log(`?? Location: Bole Rwanda, Addis Ababa, Ethiopia ????`);
-    console.log(`?? Health endpoint: http://localhost:${PORT}/api/health`);
+    console.log("Gode & Million Car Market Server running on http://" + HOST + ":" + PORT);
+    console.log("Location: Bole Rwanda, Addis Ababa, Ethiopia");
+    console.log("Health endpoint: http://localhost:" + PORT + "/api/health");
   });
 };
 

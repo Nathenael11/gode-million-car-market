@@ -1,282 +1,197 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import {
-  Menu,
-  X,
-  PlusCircle,
-  Heart,
-  Scale,
-  User,
-  Shield,
-  Car,
-  LogOut,
-  Sparkles
-} from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Menu, X, Globe, ChevronDown, LogOut, LayoutDashboard, Car, Shield } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 import { useAuth } from "../../context/AuthContext";
-import { useWishlist } from "../../context/WishlistContext";
-import { useCompare } from "../../context/CompareContext";
-import { LanguageToggle } from "./LanguageToggle";
 
 export const Navbar: React.FC = () => {
-  const { t, language } = useLanguage();
+  const { language, toggleLanguage, t } = useLanguage();
   const { user, logout } = useAuth();
-  const { wishlist } = useWishlist();
-  const { compareList } = useCompare();
-  const location = useLocation();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
-  const isActive = (path: string) => location.pathname === path;
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+    setProfileOpen(false);
+  };
 
   const navLinks = [
-    { path: "/", label: t.navHome },
-    { path: "/inventory", label: t.navInventory },
-    { path: "/estimator", label: t.navEstimator },
-    { path: "/financing", label: t.navFinancing },
-    { path: "/blog", label: t.navBlog },
-    { path: "/partners", label: t.navPartners },
-    { path: "/about", label: t.navAbout },
-    { path: "/contact", label: t.navContact }
+    { to: "/", label: t.navHome, exact: true },
+    { to: "/inventory", label: t.navInventory },
+    { to: "/sell", label: t.navSellCar },
+    { to: "/estimator", label: t.navEstimator },
+    { to: "/financing", label: t.navFinancing },
+    { to: "/blog", label: t.navBlog },
+    { to: "/about", label: t.navAbout },
   ];
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200/90 bg-white/95 backdrop-blur-md shadow-xs">
-      {/* Top utility ticker bar */}
-      <div className="hidden lg:flex items-center justify-between px-6 py-1.5 text-xs text-slate-600 bg-slate-100/80 border-b border-slate-200/60">
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-1.5">
-            <span className="text-sm">??</span>
-            <span className="text-slate-800 font-semibold">Bole Rwanda, Addis Ababa, Ethiopia ????</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-orange-600 font-semibold">
-            <span>?? Hotline:</span>
-            <a href="tel:+251911223344" className="hover:underline font-mono">+251-91-122-3344</a>
-          </div>
-          <div className="text-slate-500">
-            ? Mon - Sat: 8:30 AM - 6:30 PM (EAT)
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <span className="inline-flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-semibold text-[11px] border border-emerald-200">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>EV Zero Duty Active ?</span>
-          </span>
-          <span className="text-slate-300">|</span>
-          <span className="text-slate-700 font-mono font-medium">Telebirr &amp; CBE Birr Accepted</span>
-        </div>
-      </div>
-
-      {/* Main Nav Container */}
+    <header
+      className={`sticky top-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-white border-b border-gray-100 shadow-sm"
+          : "bg-white/95 border-b border-transparent"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Brand Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#FF8C00] to-[#EA580C] p-0.5 shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform">
-              <div className="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
-                <Car className="w-6 h-6 text-[#FF8C00]" />
-              </div>
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2.5 shrink-0" onClick={() => setMobileOpen(false)}>
+            <div className="w-9 h-9 rounded-xl bg-[#FF8C00] flex items-center justify-center shadow-md shadow-orange-200">
+              <Car className="w-5 h-5 text-white" />
             </div>
-            <div className="flex flex-col">
-              <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-lg sm:text-xl text-slate-900 tracking-tight">GODE &amp; MILLION</span>
-                <span className="text-xs px-1.5 py-0.5 rounded bg-orange-100 text-orange-800 font-bold">????</span>
-              </div>
-              <span className="text-xs text-orange-600 font-semibold -mt-0.5">
-                {language === "am" ? "???? ??? ????" : "Car Market � Bole Rwanda"}
-              </span>
+            <div className="hidden sm:block">
+              <p className="text-sm font-black text-gray-900 leading-none">
+                {language === "am" ? "ጎዴ እና ሚሊየን" : "Gode & Million"}
+              </p>
+              <p className="text-[10px] text-[#FF8C00] font-semibold leading-none mt-0.5">
+                {language === "am" ? "ቦሌ ሩዋንዳ · አ.አ" : "Bole Rwanda · Addis Ababa"}
+              </p>
             </div>
           </Link>
 
-          {/* Desktop Nav Links */}
-          <nav className="hidden xl:flex items-center space-x-1">
-            {navLinks.map(link => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={`px-3 py-2 rounded-xl text-xs font-bold transition-all ${
-                  isActive(link.path)
-                    ? "bg-orange-50 text-[#FF8C00] shadow-xs"
-                    : "text-slate-700 hover:text-[#FF8C00] hover:bg-slate-100"
-                }`}
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center gap-0.5">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end={link.exact}
+                className={({ isActive }) =>
+                  `px-3 py-2 rounded-lg text-xs font-semibold transition ${
+                    isActive
+                      ? "text-[#FF8C00] bg-orange-50"
+                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  }`
+                }
               >
                 {link.label}
-              </Link>
+              </NavLink>
             ))}
           </nav>
 
-          {/* Right Actions */}
-          <div className="hidden md:flex items-center space-x-3">
-            {/* Compare */}
-            <Link
-              to="/compare"
-              className="relative p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 hover:text-[#FF8C00] hover:bg-orange-50 transition shadow-xs"
-              title="Compare Cars"
-            >
-              <Scale className="w-4 h-4" />
-              {compareList.length > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#FF8C00] text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
-                  {compareList.length}
-                </span>
-              )}
-            </Link>
-
-            {/* Wishlist */}
-            <Link
-              to="/inventory?wishlist=true"
-              className="relative p-2.5 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 hover:text-red-500 hover:bg-red-50 transition shadow-xs"
-              title="Wishlist"
-            >
-              <Heart className="w-4 h-4" />
-              {wishlist.length > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
-                  {wishlist.length}
-                </span>
-              )}
-            </Link>
-
+          {/* Right Side */}
+          <div className="flex items-center gap-2">
             {/* Language Toggle */}
-            <LanguageToggle />
-
-            {/* Post Car CTA */}
-            <Link
-              to="/sell"
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#FF8C00] to-[#EA580C] text-white font-bold text-xs shadow-md shadow-orange-500/25 hover:brightness-105 transition"
+            <button
+              onClick={toggleLanguage}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-xs font-bold text-gray-700 hover:border-[#FF8C00] hover:text-[#FF8C00] transition"
             >
-              <PlusCircle className="w-4 h-4" />
-              <span>{t.navSellCar}</span>
-            </Link>
+              <Globe className="w-3.5 h-3.5" />
+              <span>{language === "en" ? "አማ" : "EN"}</span>
+            </button>
 
-            {/* User Account / Login */}
+            {/* Auth */}
             {user ? (
               <div className="relative">
                 <button
-                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2 p-1.5 pr-3 rounded-xl bg-slate-100 border border-slate-200 hover:border-slate-300 transition"
+                  onClick={() => setProfileOpen(!profileOpen)}
+                  className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl bg-gray-50 border border-gray-200 hover:border-[#FF8C00] transition"
                 >
                   <img
                     src={user.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${user.name}&backgroundColor=ff8c00`}
                     alt={user.name}
-                    className="w-7 h-7 rounded-lg object-cover"
+                    className="w-6 h-6 rounded-lg object-cover"
                   />
-                  <span className="text-xs font-semibold text-slate-800 max-w-[100px] truncate">
-                    {language === "am" ? user.nameAm || user.name : user.name}
+                  <span className="text-xs font-bold text-gray-900 max-w-[80px] truncate">
+                    {user.name.split(" ")[0]}
                   </span>
+                  <ChevronDown className="w-3.5 h-3.5 text-gray-500" />
                 </button>
 
-                {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 rounded-2xl bg-white border border-slate-200 shadow-xl py-1 z-50 animate-fade-in">
-                    <div className="px-3 py-2 border-b border-slate-100">
-                      <p className="text-xs font-bold text-slate-900">{user.name}</p>
-                      <p className="text-[10px] text-orange-600 uppercase font-semibold">{user.role}</p>
-                    </div>
+                {profileOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl border border-gray-100 shadow-xl py-1.5 z-50">
                     <Link
                       to="/dashboard"
-                      onClick={() => setUserDropdownOpen(false)}
-                      className="flex items-center gap-2 px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-orange-600"
+                      onClick={() => setProfileOpen(false)}
+                      className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-gray-700 hover:bg-orange-50 hover:text-[#FF8C00] transition"
                     >
-                      <User className="w-3.5 h-3.5" />
+                      <LayoutDashboard className="w-4 h-4" />
                       <span>{t.navDashboard}</span>
                     </Link>
                     {user.role === "admin" && (
                       <Link
                         to="/admin"
-                        onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2 px-3 py-2 text-xs text-orange-600 hover:bg-orange-50 font-semibold"
+                        onClick={() => setProfileOpen(false)}
+                        className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-gray-700 hover:bg-orange-50 hover:text-[#FF8C00] transition"
                       >
-                        <Shield className="w-3.5 h-3.5" />
+                        <Shield className="w-4 h-4" />
                         <span>{t.navAdmin}</span>
                       </Link>
                     )}
-                    <button
-                      onClick={() => {
-                        logout();
-                        setUserDropdownOpen(false);
-                      }}
-                      className="w-full flex items-center gap-2 px-3 py-2 text-xs text-red-600 hover:bg-red-50"
-                    >
-                      <LogOut className="w-3.5 h-3.5" />
-                      <span>{t.navLogout}</span>
-                    </button>
+                    <div className="border-t border-gray-100 mt-1 pt-1">
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-2.5 w-full px-4 py-2.5 text-xs font-semibold text-red-600 hover:bg-red-50 transition"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span>{t.navLogout}</span>
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
             ) : (
-              <Link
-                to="/login"
-                className="px-3.5 py-2 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800 hover:text-[#FF8C00] hover:bg-slate-200/80 transition"
-              >
-                {t.navLogin}
-              </Link>
+              <div className="flex items-center gap-2">
+                <Link
+                  to="/login"
+                  className="hidden sm:block text-xs font-semibold text-gray-700 px-3 py-2 rounded-lg hover:bg-gray-50 transition"
+                >
+                  {t.navLogin}
+                </Link>
+                <Link
+                  to="/register"
+                  className="text-xs font-bold text-white px-4 py-2 rounded-xl bg-[#FF8C00] hover:bg-[#E07B00] shadow-sm shadow-orange-200 transition"
+                >
+                  {t.navRegister}
+                </Link>
+              </div>
             )}
-          </div>
 
-          {/* Mobile hamburger button */}
-          <div className="flex md:hidden items-center gap-2">
-            <LanguageToggle />
+            {/* Mobile menu button */}
             <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl bg-slate-100 border border-slate-200 text-slate-700 hover:text-slate-900"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="lg:hidden p-2 rounded-xl text-gray-600 hover:bg-gray-100 transition"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile drawer menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-2 shadow-lg">
-          {navLinks.map(link => (
-            <Link
-              key={link.path}
-              to={link.path}
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-2.5 rounded-xl text-sm font-semibold ${
-                isActive(link.path)
-                  ? "bg-orange-50 text-[#FF8C00] font-bold"
-                  : "text-slate-700 hover:bg-slate-100"
-              }`}
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div className="lg:hidden border-t border-gray-100 bg-white px-4 py-3 space-y-1">
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end={link.exact}
+              onClick={() => setMobileOpen(false)}
+              className={({ isActive }) =>
+                `block px-4 py-2.5 rounded-xl text-sm font-semibold transition ${
+                  isActive ? "text-[#FF8C00] bg-orange-50" : "text-gray-700 hover:bg-gray-50"
+                }`
+              }
             >
               {link.label}
-            </Link>
+            </NavLink>
           ))}
-
-          <div className="pt-3 border-t border-slate-200 space-y-2">
-            <Link
-              to="/sell"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-[#FF8C00] to-[#EA580C] text-white font-bold text-sm shadow-md"
-            >
-              <PlusCircle className="w-4 h-4" />
-              <span>{t.navSellCar}</span>
-            </Link>
-
-            {user ? (
-              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-200">
-                <Link
-                  to="/dashboard"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 text-sm font-semibold text-slate-900"
-                >
-                  <User className="w-4 h-4 text-[#FF8C00]" />
-                  <span>{user.name}</span>
-                </Link>
-                <button onClick={logout} className="text-xs text-red-600 font-semibold">
-                  {t.navLogout}
-                </button>
-              </div>
-            ) : (
-              <Link
-                to="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block text-center py-2.5 rounded-xl bg-slate-100 border border-slate-200 text-sm font-bold text-slate-800"
-              >
-                {t.navLogin}
-              </Link>
-            )}
-          </div>
+          <button
+            onClick={() => { toggleLanguage(); setMobileOpen(false); }}
+            className="block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-50"
+          >
+            {language === "en" ? "Amharic (አማርኛ)" : "English"}
+          </button>
         </div>
       )}
     </header>

@@ -163,14 +163,14 @@ export const CarDetail: React.FC = () => {
           <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-lg space-y-5">
             <div>
               <span className="text-xs font-bold text-orange-600 uppercase tracking-wider">
-                {car.make} • {car.year}
+                {car.make} ï¿½ {car.year}
               </span>
               <h1 className="text-xl sm:text-2xl font-black text-slate-900 mt-0.5">
                 {displayTitle}
               </h1>
               <p className="flex items-center gap-1 text-xs text-slate-500 mt-1.5 font-medium">
                 <MapPin className="w-3.5 h-3.5 text-slate-400" />
-                <span>{language === "am" && car.locationAm ? car.locationAm : car.location}</span>
+                <span>{language === "am" && car.location ? car.location : car.location}</span>
               </p>
             </div>
 

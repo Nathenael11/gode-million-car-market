@@ -1,7 +1,7 @@
 {
-  "name": "gode-and-million-car-market-fullstack",
+  "name": "gode-million-car-market",
   "version": "1.0.0",
-  "description": "Gode and Million Car Market (?? ?? ???? ???? ???) - Bole Rwanda, Addis Ababa, Ethiopia ????",
+  "description": "Gode and Million Car Market - Premier Automotive Marketplace in Bole Rwanda, Addis Ababa, Ethiopia",
   "scripts": {
     "install:all": "npm --prefix server install && npm --prefix client install",
     "dev:server": "npm --prefix server run dev",
@@ -18,6 +18,6 @@
     "react",
     "express"
   ],
-  "author": "Nathenael / Gode & Million Automotive",
+  "author": "Gode & Million Automotive Ethiopia",
   "license": "MIT"
 }
