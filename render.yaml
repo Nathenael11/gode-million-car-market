@@ -1,11 +1,13 @@
 services:
-  # Backend API Web Service
   - type: web
-    name: gode-million-car-market-api
-    env: node
+    name: gode-million-api
+    runtime: node
     plan: free
+    region: frankfurt
     buildCommand: cd server && npm install
     startCommand: cd server && npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
     envVars:
       - key: NODE_ENV
         value: production
@@ -13,16 +15,29 @@ services:
         value: 5000
       - key: JWT_SECRET
         generateValue: true
-      - key: JWT_EXPIRE
-        value: 30d
-    healthCheckPath: /api/health
+      - key: MONGO_URI
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLIENT_URL
+        value: https://gode-million-web.onrender.com
 
-  # Frontend Static Site
-  - type: static_site
-    name: gode-million-car-market-web
+  - type: static
+    name: gode-million-web
+    runtime: static
+    plan: free
+    region: frankfurt
     buildCommand: cd client && npm install && npm run build
-    publishPath: client/dist
+    staticPublishPath: client/dist
+    autoDeploy: true
     routes:
       - type: rewrite
         source: /*
         destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://gode-million-api.onrender.com/api
