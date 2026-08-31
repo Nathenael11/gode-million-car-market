@@ -454,7 +454,7 @@
       "isFeatured": true,
       "isComingSoon": false,
       "isInspectionVerified": true,
-      "viewsCount": 3110,
+      "viewsCount": 3111,
       "images": [
         "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=700&q=70",
         "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=700&q=70"
@@ -516,7 +516,7 @@
       "isFeatured": false,
       "isComingSoon": true,
       "isInspectionVerified": true,
-      "viewsCount": 5600,
+      "viewsCount": 5602,
       "images": [
         "https://images.unsplash.com/photo-1563720223523-491ff04651ef?auto=format&fit=crop&w=700&q=70",
         "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=700&q=70"
@@ -672,5 +672,5 @@
       "createdAt": "2025-02-27T15:00:00.000Z"
     }
   ],
-  "lastUpdated": "2026-08-31T18:08:48.672Z"
+  "lastUpdated": "2026-08-31T20:49:14.539Z"
 }
