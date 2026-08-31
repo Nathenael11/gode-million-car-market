@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  Search, MapPin, ShieldCheck, Zap, TrendingUp, ChevronRight, Car, Phone
+  Search, MapPin, ShieldCheck, Zap, TrendingUp, ChevronRight, Car, Phone, Sparkles
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { CarGrid } from "../components/car/CarGrid";
 import { CarItem } from "../components/car/CarCard";
 import { EthiopianMap } from "../components/common/EthiopianMap";
+import { HeroShowcase } from "../components/home/HeroShowcase";
 import { apiRequest } from "../utils/api";
 
 export const Home: React.FC = () => {
@@ -40,60 +41,62 @@ export const Home: React.FC = () => {
   return (
     <div className="space-y-16 pb-20">
 
-      {/* ── Hero ── */}
-      <section className="relative bg-gradient-to-br from-[#FFF8F0] via-white to-[#F8FAFC] border-b border-gray-100 py-14 lg:py-24 overflow-hidden">
-        {/* Background decor */}
-        <div className="absolute top-0 right-0 w-72 h-72 rounded-full bg-[#FF8C00]/5 blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full bg-orange-100/40 blur-2xl translate-y-1/2 -translate-x-1/4 pointer-events-none" />
+      {/* ── Dynamic Interactive Hero Section ── */}
+      <section className="relative bg-gradient-to-br from-[#FFF9F2] via-white to-[#F8FAFC] border-b border-gray-100 py-12 lg:py-16 overflow-hidden">
+        {/* Ambient background decor */}
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[#FF8C00]/5 blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-orange-100/40 blur-2xl translate-y-1/2 -translate-x-1/4 pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            <div className="lg:col-span-8 space-y-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative space-y-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            {/* Left: Headlines, Search Bar & Quick Filters */}
+            <div className="lg:col-span-5 space-y-6 text-left">
 
-              {/* Location badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 border border-orange-200 text-orange-800 text-xs font-bold">
+              {/* Location Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100/90 border border-orange-200 text-orange-800 text-xs font-bold shadow-xs">
                 <span className="w-2 h-2 rounded-full bg-[#FF8C00] animate-ping" />
-                <MapPin className="w-3.5 h-3.5" />
+                <MapPin className="w-3.5 h-3.5 text-[#FF8C00]" />
                 <span>
                   {language === "am"
-                    ? "ቦሌ ሩዋንዳ፣ አዲስ አበባ — ኢትዮጵያ"
-                    : "Bole Rwanda, Addis Ababa — Ethiopia"}
+                    ? "ቦሌ ሩዋንዳ፣ አዲስ አበባ 🇪🇹"
+                    : "Bole Rwanda, Addis Ababa 🇪🇹"}
                 </span>
               </div>
 
               {/* Headline */}
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight tracking-tight">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 leading-tight tracking-tight">
                 {language === "am" ? (
                   <>
                     <span>ህልምዎን </span>
-                    <span className="text-[#FF8C00]">መኪና</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF8C00] to-[#EA580C]">መኪና</span>
                     <br />
-                    <span>ያግኙ</span>
+                    <span>በቀላሉ ያግኙ</span>
                   </>
                 ) : (
                   <>
                     Find Your Dream
                     <br />
-                    <span className="text-[#FF8C00]">Car in Addis</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF8C00] to-[#EA580C]">Car in Addis</span>
                   </>
                 )}
               </h1>
 
-              <p className="text-sm sm:text-base text-gray-500 max-w-xl leading-relaxed">
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                 {language === "am"
-                  ? "ቀረጥ ነፃ ኤሌክትሪክ መኪናዎች፣ 120-ነጥብ ቴክኒካዊ ምርመራ ያለፉ አዳዲስ እና ያገለገሉ ተሽከርካሪዎች — ሁሉም በብር ዋጋ ግልጽ ሁኔታ። ቦሌ ሩዋንዳ፣ አዲስ አበባ።"
-                  : "Fully inspected new & used vehicles with transparent ETB pricing. EV duty-free incentives, bank loan support, and test drives available at our Bole Rwanda showroom."}
+                  ? "ቀረጥ ነፃ የኤሌክትሪክ መኪናዎች፣ 120-ነጥብ ምርመራ ያለፉ አዳዲስ እና ያገለገሉ ተሽከርካሪዎች — በኢትዮጵያ ብር ግልጽ ዋጋ። ቦሌ ሩዋንዳ ሾውሩም።"
+                  : "Fully inspected new & used vehicles with transparent ETB pricing. Zero-duty EVs, bank loan financing, and instant test drives in Bole Rwanda."}
               </p>
 
-              {/* Search form */}
+              {/* Search Form */}
               <form
                 onSubmit={handleHeroSearch}
-                className="bg-white rounded-2xl border border-gray-200 shadow-lg p-1.5 flex flex-col sm:flex-row gap-1.5 max-w-2xl"
+                className="bg-white rounded-2xl border border-gray-200 shadow-md p-1.5 flex flex-col sm:flex-row gap-1.5"
               >
                 <select
                   value={searchMake}
                   onChange={e => setSearchMake(e.target.value)}
-                  className="flex-1 px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-sm font-medium text-gray-900 focus:outline-none focus:border-[#FF8C00]"
+                  className="flex-1 px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-xs font-semibold text-gray-900 focus:outline-none focus:border-[#FF8C00]"
                 >
                   <option value="all">{t.allMakes}</option>
                   <option value="Toyota">Toyota (ቶዮታ)</option>
@@ -105,49 +108,36 @@ export const Home: React.FC = () => {
                 </select>
 
                 <select
-                  value={searchBody}
-                  onChange={e => setSearchBody(e.target.value)}
-                  className="flex-1 px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-sm font-medium text-gray-900 focus:outline-none focus:border-[#FF8C00]"
-                >
-                  <option value="all">{t.allBodyTypes}</option>
-                  <option value="SUV">SUV / 4x4</option>
-                  <option value="Sedan">Sedan</option>
-                  <option value="Pickup">Pickup</option>
-                  <option value="Hatchback">Hatchback</option>
-                </select>
-
-                <select
                   value={searchFuel}
                   onChange={e => setSearchFuel(e.target.value)}
-                  className="flex-1 px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-sm font-medium text-gray-900 focus:outline-none focus:border-[#FF8C00]"
+                  className="flex-1 px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-200 text-xs font-semibold text-gray-900 focus:outline-none focus:border-[#FF8C00]"
                 >
                   <option value="all">{t.allFuelTypes}</option>
                   <option value="Petrol">Petrol</option>
                   <option value="Diesel">Diesel</option>
-                  <option value="Electric">Electric (EV)</option>
+                  <option value="Electric">⚡ Electric EV</option>
                 </select>
 
                 <button
                   type="submit"
-                  className="flex items-center justify-center gap-2 px-6 py-3 bg-[#FF8C00] hover:bg-[#E07B00] text-white font-bold text-sm rounded-xl transition shadow-md shadow-orange-200"
+                  className="flex items-center justify-center gap-1.5 px-5 py-2.5 bg-[#FF8C00] hover:bg-[#E07B00] text-white font-bold text-xs rounded-xl transition shadow-md shadow-orange-200"
                 >
                   <Search className="w-4 h-4" />
                   <span className="whitespace-nowrap">{t.searchButton}</span>
                 </button>
               </form>
 
-              {/* Quick action links */}
-              <div className="flex flex-wrap gap-2">
+              {/* Quick Tags */}
+              <div className="flex flex-wrap gap-2 pt-1">
                 {[
-                  { label: language === "am" ? "ቀረጥ ነፃ EV" : "EV Duty-Free", to: "/inventory?fuelType=Electric", color: "bg-emerald-50 text-emerald-700 border-emerald-200" },
-                  { label: "Toyota Prado", to: "/inventory?make=Toyota", color: "bg-orange-50 text-orange-700 border-orange-200" },
-                  { label: language === "am" ? "ያዲስ መኪናዎች" : "Brand New", to: "/inventory?condition=Brand New", color: "bg-blue-50 text-blue-700 border-blue-200" },
-                  { label: language === "am" ? "ፒክ-አፕ" : "Pickup Trucks", to: "/inventory?bodyType=Pickup", color: "bg-slate-50 text-slate-700 border-slate-200" },
+                  { label: language === "am" ? "⚡ ቀረጥ ነፃ EV" : "⚡ EV Duty-Free", to: "/inventory?fuelType=Electric", color: "bg-emerald-50 text-emerald-800 border-emerald-300" },
+                  { label: "Toyota Prado", to: "/inventory?make=Toyota", color: "bg-orange-50 text-orange-800 border-orange-200" },
+                  { label: language === "am" ? "✨ አዲስ መኪናዎች" : "✨ Brand New", to: "/inventory?condition=Brand New", color: "bg-blue-50 text-blue-800 border-blue-200" },
                 ].map(q => (
                   <Link
                     key={q.label}
                     to={q.to}
-                    className={`px-3.5 py-1.5 rounded-full border text-xs font-bold transition hover:scale-105 ${q.color}`}
+                    className={`px-3 py-1 rounded-full border text-[11px] font-extrabold transition hover:scale-105 ${q.color}`}
                   >
                     {q.label}
                   </Link>
@@ -155,23 +145,31 @@ export const Home: React.FC = () => {
               </div>
             </div>
 
-            {/* Right: Stats */}
-            <div className="lg:col-span-4 grid grid-cols-2 gap-3">
-              {[
-                { icon: Car, value: "500+", label: language === "am" ? "የተረጋገጡ መኪናዎች" : "Verified Cars", color: "text-[#FF8C00] bg-orange-50" },
-                { icon: ShieldCheck, value: "120", label: language === "am" ? "ነጥብ ምርመራ" : "Point Inspection", color: "text-emerald-600 bg-emerald-50" },
-                { icon: Zap, value: "0%", label: language === "am" ? "EV ቀረጥ ነፃ" : "EV Duty Tax", color: "text-blue-600 bg-blue-50" },
-                { icon: TrendingUp, value: "70%", label: language === "am" ? "ባንክ ብድር" : "Bank Financing", color: "text-violet-600 bg-violet-50" },
-              ].map(stat => (
-                <div key={stat.label} className="p-5 rounded-2xl bg-white border border-gray-100 shadow-xs hover:shadow-sm transition">
-                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${stat.color}`}>
-                    <stat.icon className="w-5 h-5" />
-                  </div>
-                  <p className="text-2xl font-black text-gray-900">{stat.value}</p>
-                  <p className="text-xs text-gray-500 mt-0.5 leading-tight">{stat.label}</p>
-                </div>
-              ))}
+            {/* Right: Dynamic Interactive Showcase Vehicle */}
+            <div className="lg:col-span-7">
+              <HeroShowcase />
             </div>
+
+          </div>
+
+          {/* Four Key Value Metric Pillars */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-gray-100">
+            {[
+              { icon: Car, value: "500+", label: language === "am" ? "የተረጋገጡ መኪናዎች" : "Verified Cars", color: "text-[#FF8C00] bg-orange-50" },
+              { icon: ShieldCheck, value: "120", label: language === "am" ? "ነጥብ ምርመራ" : "Point Inspection", color: "text-emerald-600 bg-emerald-50" },
+              { icon: Zap, value: "0%", label: language === "am" ? "EV ቀረጥ ነፃ" : "EV Duty Tax", color: "text-blue-600 bg-blue-50" },
+              { icon: TrendingUp, value: "70%", label: language === "am" ? "ባንክ ብድር" : "Bank Financing", color: "text-violet-600 bg-violet-50" },
+            ].map(stat => (
+              <div key={stat.label} className="p-4 rounded-2xl bg-white border border-gray-200 shadow-xs flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${stat.color}`}>
+                  <stat.icon className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-xl font-black text-gray-900 leading-none">{stat.value}</p>
+                  <p className="text-[11px] text-gray-500 mt-1 leading-tight">{stat.label}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
