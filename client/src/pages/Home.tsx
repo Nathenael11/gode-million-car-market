@@ -12,11 +12,16 @@ import { apiRequest } from "../utils/api";
 /* ─── Animated Moving Car Hero ─────────────────────────────────────── */
 const AnimatedCarHero: React.FC = () => {
   // Cycling through multiple bright car images that simulate motion
+  // All photos: pure car shots, no people
   const carImages = [
-    "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1920&q=85",
-    "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&w=1920&q=85",
+    // Red Porsche Carrera on open road — no people
     "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1920&q=85",
-    "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1920&q=85",
+    // Lamborghini Aventador orange exterior — no people
+    "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?auto=format&fit=crop&w=1920&q=85",
+    // Black BMW M sporty car on road — no people
+    "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=1920&q=85",
+    // White luxury sports car side view — no people
+    "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=1920&q=85",
   ];
   const [frame, setFrame] = useState(0);
 
