@@ -14,3 +14,5 @@ services:
         value: 10000
       - key: JWT_SECRET
         generateValue: true
+      - key: CLIENT_URL
+        value: https://gode-million-car-market.onrender.com
