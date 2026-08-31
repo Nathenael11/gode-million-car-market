@@ -1,13 +1,12 @@
 services:
+  # ========== BACKEND API ==========
   - type: web
     name: gode-million-api
-    runtime: node
+    env: node
     plan: free
-    region: frankfurt
     buildCommand: cd server && npm install
     startCommand: cd server && npm start
     healthCheckPath: /api/health
-    autoDeploy: true
     envVars:
       - key: NODE_ENV
         value: production
@@ -26,14 +25,13 @@ services:
       - key: CLIENT_URL
         value: https://gode-million-web.onrender.com
 
-  - type: static
+  # ========== FRONTEND ==========
+  - type: web
     name: gode-million-web
-    runtime: static
+    env: static
     plan: free
-    region: frankfurt
     buildCommand: cd client && npm install && npm run build
-    staticPublishPath: client/dist
-    autoDeploy: true
+    staticPublishPath: ./client/dist
     routes:
       - type: rewrite
         source: /*
