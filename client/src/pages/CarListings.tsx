@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { LayoutGrid, List, SlidersHorizontal, Car, Sparkles } from "lucide-react";
+import { LayoutGrid, List, SlidersHorizontal, Car, Sparkles, X } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { useWishlist } from "../context/WishlistContext";
 import { CarGrid } from "../components/car/CarGrid";
@@ -79,26 +79,30 @@ export const CarListings: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 sm:space-y-8">
       {/* Header Banner */}
-      <div className="p-6 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="p-5 sm:p-8 rounded-3xl bg-white border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#FF8C00] uppercase tracking-wider mb-1">
             <Car className="w-3.5 h-3.5" />
-            <span>{isWishlistView ? "Saved Vehicles" : "Showroom Inventory"}</span>
+            <span>
+              {isWishlistView
+                ? (language === "am" ? "የተቀመጡ መኪኖች" : "Saved Vehicles")
+                : (language === "am" ? "የሾውሩም መኪኖች ዝርዝር" : "Showroom Inventory")}
+            </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
+          <h1 className="text-xl sm:text-3xl font-black text-slate-900">
             {isWishlistView
-              ? (language === "am" ? "????? ???? ????" : "My Saved Wishlist")
-              : (language === "am" ? "?????? ?? ????" : "Available Vehicles in Addis Ababa")}
+              ? (language === "am" ? "የተመረጡ መኪኖች ዝርዝር" : "My Saved Wishlist")
+              : (language === "am" ? "በአዲስ አበባ የሚገኙ መኪኖች" : "Available Vehicles in Addis Ababa")}
           </h1>
           <p className="text-xs text-slate-500 mt-1">
-            {cars.length} {cars.length === 1 ? "vehicle available" : "vehicles available"} in Bole Rwanda Showroom
+            {cars.length} {cars.length === 1 ? (language === "am" ? "መኪና ይገኛል" : "vehicle available") : (language === "am" ? "መኪኖች ይገኛሉ" : "vehicles available")} — ቦሌ ሩዋንዳ ሾውሩም
           </p>
         </div>
 
-        {/* View Mode & Sort */}
-        <div className="flex items-center gap-3">
+        {/* View Mode & Mobile Filter Trigger */}
+        <div className="flex items-center gap-2.5">
           <div className="flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200">
             <button
               onClick={() => setViewMode("grid")}
@@ -122,10 +126,15 @@ export const CarListings: React.FC = () => {
 
           <button
             onClick={() => setMobileFilterOpen(!mobileFilterOpen)}
-            className="lg:hidden flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800"
+            className="lg:hidden flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#FF8C00] text-white text-xs font-bold shadow-sm shadow-orange-500/20 active:scale-95 transition"
           >
             <SlidersHorizontal className="w-3.5 h-3.5" />
-            <span>Filters</span>
+            <span>{language === "am" ? "ማጣሪያ (Filters)" : "Filters"}</span>
+            {cars.length > 0 && (
+              <span className="ml-1 px-1.5 py-0.2 rounded-full bg-white text-[#FF8C00] text-[10px] font-black">
+                {cars.length}
+              </span>
+            )}
           </button>
         </div>
       </div>
@@ -142,9 +151,20 @@ export const CarListings: React.FC = () => {
           />
         </aside>
 
-        {/* Mobile Filter Modal */}
+        {/* Mobile Filter Sheet / Section */}
         {mobileFilterOpen && (
-          <div className="lg:hidden col-span-12">
+          <div className="lg:hidden col-span-12 animate-in fade-in duration-200">
+            <div className="flex items-center justify-between mb-2 px-1">
+              <span className="text-xs font-black text-slate-800 uppercase tracking-wider">
+                {language === "am" ? "የመኪና ማጣሪያዎች" : "Vehicle Filters"}
+              </span>
+              <button
+                onClick={() => setMobileFilterOpen(false)}
+                className="p-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
             <CarFilter
               filters={filters}
               setFilters={setFilters}

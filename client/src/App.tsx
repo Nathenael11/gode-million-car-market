@@ -6,6 +6,7 @@ import { WishlistProvider } from "./context/WishlistContext";
 import { CompareProvider } from "./context/CompareContext";
 import { Navbar } from "./components/common/Navbar";
 import { Footer } from "./components/common/Footer";
+import { MobileBottomNav } from "./components/common/MobileBottomNav";
 import { CompareDrawer } from "./components/car/CompareDrawer";
 
 import { Home } from "./pages/Home";
@@ -35,7 +36,7 @@ export const App: React.FC = () => {
             <BrowserRouter>
               <div className="flex flex-col min-h-screen bg-[#F8FAFC] text-slate-900 font-sans selection:bg-[#FF8C00] selection:text-white antialiased">
                 <Navbar />
-                <main className="flex-grow">
+                <main className="flex-grow pb-14 lg:pb-0">
                   <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/inventory" element={<CarListings />} />
@@ -57,6 +58,7 @@ export const App: React.FC = () => {
                   </Routes>
                 </main>
                 <Footer />
+                <MobileBottomNav />
                 <CompareDrawer />
               </div>
             </BrowserRouter>
