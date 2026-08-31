@@ -7,7 +7,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { CarGrid } from "../components/car/CarGrid";
 import { CarItem } from "../components/car/CarCard";
 import { EthiopianMap } from "../components/common/EthiopianMap";
-import { HeroShowcase } from "../components/home/HeroShowcase";
+import { DynamicMovingCar } from "../components/home/DynamicMovingCar";
 import { apiRequest } from "../utils/api";
 
 export const Home: React.FC = () => {
@@ -41,8 +41,8 @@ export const Home: React.FC = () => {
   return (
     <div className="space-y-16 pb-20">
 
-      {/* ── Dynamic Interactive Hero Section ── */}
-      <section className="relative bg-gradient-to-br from-[#FFF9F2] via-white to-[#F8FAFC] border-b border-gray-100 py-12 lg:py-16 overflow-hidden">
+      {/* ── Dynamic Moving Car Hero Section ── */}
+      <section className="relative bg-gradient-to-br from-[#FFF9F2] via-white to-[#F8FAFC] border-b border-gray-100 py-10 lg:py-16 overflow-hidden">
         {/* Ambient background decor */}
         <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-[#FF8C00]/5 blur-3xl -translate-y-1/2 translate-x-1/4 pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-80 h-80 rounded-full bg-orange-100/40 blur-2xl translate-y-1/2 -translate-x-1/4 pointer-events-none" />
@@ -145,9 +145,9 @@ export const Home: React.FC = () => {
               </div>
             </div>
 
-            {/* Right: Dynamic Interactive Showcase Vehicle */}
+            {/* Right: Dynamic Animated Moving Car Component */}
             <div className="lg:col-span-7">
-              <HeroShowcase />
+              <DynamicMovingCar />
             </div>
 
           </div>
