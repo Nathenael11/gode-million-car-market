@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  Search, MapPin, ShieldCheck, Zap, TrendingUp, ChevronRight, Car, Phone, Eye
+  Search, MapPin, ShieldCheck, Zap, TrendingUp, ChevronRight, Car, Phone
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { CarGrid } from "../components/car/CarGrid";
@@ -18,8 +18,6 @@ export const Home: React.FC = () => {
   const [searchMake, setSearchMake] = useState("all");
   const [searchFuel, setSearchFuel] = useState("all");
   const [searchBody, setSearchBody] = useState("all");
-
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     apiRequest("/cars")
@@ -42,33 +40,53 @@ export const Home: React.FC = () => {
   return (
     <div className="space-y-16 pb-20">
 
-      {/* ── Cinematic Real Car Video Background Hero ── */}
-      <section className="relative min-h-[580px] lg:min-h-[640px] flex items-center overflow-hidden bg-slate-950 text-white">
-        
-        {/* Real Moving Car Video Loop in Background */}
+      {/* ── Cinematic Car Hero with YouTube Background ── */}
+      <section className="relative min-h-[600px] lg:min-h-[680px] flex items-center overflow-hidden bg-slate-950 text-white">
+
+        {/* YouTube iframe as full-bleed background video — bright daylight car driving */}
+        {/* Video: Car driving in daylight - autoplay muted loop, no controls */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <iframe
+            src="https://www.youtube.com/embed/sMdBE6FfaS4?autoplay=1&mute=1&loop=1&playlist=sMdBE6FfaS4&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&iv_load_policy=3&start=2"
+            title="Car driving background video"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            className="absolute"
+            style={{
+              width: "200%",
+              height: "200%",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              border: "none",
+              pointerEvents: "none"
+            }}
+          />
+        </div>
+
+        {/* Local video fallback — plays if YouTube blocked */}
         <video
-          ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
           poster="https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1920&q=80"
-          className="absolute inset-0 w-full h-full object-cover scale-100 filter brightness-100 saturate-110"
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ zIndex: -1 }}
         >
           <source src="/videos/car-road-2.mp4" type="video/mp4" />
           <source src="/videos/hero-car.mp4" type="video/mp4" />
         </video>
 
-        {/* Subtle Left-Side Text Background — Car is Fully Visible on Right */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/55 to-transparent pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
+        {/* Left text fade only — right side shows clear car video */}
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/92 via-slate-950/50 to-transparent pointer-events-none" style={{ zIndex: 1 }} />
+        <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-slate-950 to-transparent pointer-events-none" style={{ zIndex: 1 }} />
 
-        {/* Hero Content Overlay */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 lg:py-20 w-full">
+        {/* Hero Content */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative py-16 lg:py-20 w-full" style={{ zIndex: 2 }}>
           <div className="max-w-2xl space-y-6 text-left">
-            
-            {/* Location & Trust Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-orange-400 text-xs font-bold shadow-lg">
+
+            {/* Location Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/25 text-orange-400 text-xs font-bold shadow-lg">
               <span className="w-2 h-2 rounded-full bg-[#FF8C00] animate-ping" />
               <MapPin className="w-3.5 h-3.5" />
               <span>
@@ -78,8 +96,8 @@ export const Home: React.FC = () => {
               </span>
             </div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+            {/* Headline */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight drop-shadow-lg">
               {language === "am" ? (
                 <>
                   <span>ህልምዎን </span>
@@ -96,17 +114,17 @@ export const Home: React.FC = () => {
               )}
             </h1>
 
-            {/* Description */}
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl font-normal">
+            {/* Sub-description */}
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl">
               {language === "am"
-                ? "ቀረጥ ነፃ የኤሌክትሪክ መኪናዎች፣ 120-ነጥብ ምርመራ ያለፉ አዳዲስ እና ያገለገሉ ተሽከርካሪዎች — በኢትዮጵያ ብር ግልጽ ዋጋ። የባንክ ብድር ድጋፍ በቦሌ ሩዋንዳ ሾውሩም።"
+                ? "ቀረጥ ነፃ ኤሌክትሪክ ተሽከርካሪዎች፣ 120-ነጥብ ምርመራ ያለፉ አዳዲስ እና ያገለገሉ መኪናዎች — ግልጽ የብር ዋጋ። ቦሌ ሩዋንዳ ሾውሩም።"
                 : "Fully inspected new & used vehicles with transparent ETB pricing. Zero-duty EVs, bank loan financing, and instant test drives at our Bole Rwanda showroom."}
             </p>
 
-            {/* Search Box on Hero */}
+            {/* Search Form */}
             <form
               onSubmit={handleHeroSearch}
-              className="bg-white/95 backdrop-blur-md rounded-2xl border border-white/40 shadow-2xl p-2 flex flex-col sm:flex-row gap-2 max-w-xl"
+              className="bg-white/95 backdrop-blur-md rounded-2xl border border-white/30 shadow-2xl p-2 flex flex-col sm:flex-row gap-2 max-w-xl"
             >
               <select
                 value={searchMake}
@@ -130,7 +148,7 @@ export const Home: React.FC = () => {
                 <option value="all">{t.allFuelTypes}</option>
                 <option value="Petrol">Petrol (ቤንዚን)</option>
                 <option value="Diesel">Diesel (ናፍጣ)</option>
-                <option value="Electric">⚡ Electric EV (ቀረጥ ነፃ)</option>
+                <option value="Electric">⚡ Electric EV</option>
               </select>
 
               <button
@@ -142,44 +160,26 @@ export const Home: React.FC = () => {
               </button>
             </form>
 
-            {/* Quick Filter Tags & CTAs */}
-            <div className="flex flex-wrap items-center gap-2.5 pt-2">
-              <Link
-                to="/inventory?fuelType=Electric"
-                className="px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/40 text-emerald-300 text-xs font-bold transition flex items-center gap-1"
-              >
+            {/* Quick Filter Tags */}
+            <div className="flex flex-wrap items-center gap-2.5">
+              <Link to="/inventory?fuelType=Electric" className="px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/40 text-emerald-300 text-xs font-bold transition flex items-center gap-1">
                 <Zap className="w-3.5 h-3.5" />
                 <span>{language === "am" ? "ቀረጥ ነፃ EV" : "EV Duty-Free"}</span>
               </Link>
-
-              <Link
-                to="/inventory?make=Toyota"
-                className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-slate-200 text-xs font-bold transition"
-              >
-                Toyota Prado
-              </Link>
-
-              <Link
-                to="/inventory?condition=Brand New"
-                className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-slate-200 text-xs font-bold transition"
-              >
+              <Link to="/inventory?make=Toyota" className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-slate-200 text-xs font-bold transition">Toyota Prado</Link>
+              <Link to="/inventory?condition=Brand New" className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-slate-200 text-xs font-bold transition">
                 {language === "am" ? "አዲስ መኪናዎች" : "Brand New"}
               </Link>
-
-              <a
-                href="tel:+251911223344"
-                className="px-4 py-1.5 rounded-xl bg-[#FF8C00]/20 hover:bg-[#FF8C00]/30 border border-[#FF8C00]/50 text-orange-300 text-xs font-bold transition flex items-center gap-1.5 ml-auto sm:ml-0"
-              >
+              <a href="tel:+251911223344" className="px-4 py-1.5 rounded-xl bg-[#FF8C00]/20 hover:bg-[#FF8C00]/30 border border-[#FF8C00]/50 text-orange-300 text-xs font-bold transition flex items-center gap-1.5 ml-auto sm:ml-0">
                 <Phone className="w-3.5 h-3.5" />
                 <span>+251-91-122-3344</span>
               </a>
             </div>
-
           </div>
         </div>
 
-        {/* Bottom Floating Stats Bar */}
-        <div className="absolute bottom-0 inset-x-0 bg-slate-950/80 backdrop-blur-md border-t border-white/10 py-3 hidden md:block">
+        {/* Bottom Stats Bar */}
+        <div className="absolute bottom-0 inset-x-0 bg-slate-950/80 backdrop-blur-md border-t border-white/10 py-3 hidden md:block" style={{ zIndex: 2 }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-4 gap-4 text-center">
             <div className="flex items-center justify-center gap-2">
               <Car className="w-4 h-4 text-[#FF8C00]" />
@@ -214,10 +214,7 @@ export const Home: React.FC = () => {
                 : "Hand-picked selections available at our Bole Rwanda showroom"}
             </p>
           </div>
-          <Link
-            to="/inventory"
-            className="hidden sm:flex items-center gap-1.5 text-sm font-bold text-[#FF8C00] hover:underline"
-          >
+          <Link to="/inventory" className="hidden sm:flex items-center gap-1.5 text-sm font-bold text-[#FF8C00] hover:underline">
             <span>{language === "am" ? "ሁሉንም ይዩ" : "View All"}</span>
             <ChevronRight className="w-4 h-4" />
           </Link>
@@ -226,10 +223,7 @@ export const Home: React.FC = () => {
         <CarGrid cars={featuredCars} loading={loading} />
 
         <div className="text-center mt-10">
-          <Link
-            to="/inventory"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-[#FF8C00] hover:bg-[#E07B00] text-white font-bold text-sm transition shadow-lg shadow-orange-200"
-          >
+          <Link to="/inventory" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-[#FF8C00] hover:bg-[#E07B00] text-white font-bold text-sm transition shadow-lg shadow-orange-200">
             <span>{language === "am" ? "ሁሉንም ተሽከርካሪዎች ይዩ" : "Browse All Vehicles"}</span>
             <ChevronRight className="w-4 h-4" />
           </Link>
@@ -251,26 +245,10 @@ export const Home: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              {
-                icon: "🔍",
-                title: language === "am" ? "120-ነጥብ ምርመራ" : "120-Point Inspection",
-                desc: language === "am" ? "እያንዳንዱ መኪና ሙሉ ቴክኒካዊ ምርመራ ካለፈ በኋላ ብቻ ይቀርባል" : "Every car undergoes a full mechanical inspection before listing"
-              },
-              {
-                icon: "⚡",
-                title: language === "am" ? "EV ቀረጥ ነፃ" : "EV Duty-Free",
-                desc: language === "am" ? "ቮልስዋገን ID.4፣ BYD Song Plus — ዜሮ ቀረጥ ኢቪ መኪናዎች ዝርዝር" : "Volkswagen ID.4, BYD Song Plus — zero excise duty EVs in stock"
-              },
-              {
-                icon: "🏦",
-                title: language === "am" ? "ባንክ ብድር" : "Bank Financing",
-                desc: language === "am" ? "ቀጥ ያለ የባንክ ብድር ትስስር፣ እስከ 70% ብድር፣ 3-5 ዓ.ም ስምምነት" : "Direct CBE & Awash Bank auto loan arrangement, up to 70%, 3-5 yr terms"
-              },
-              {
-                icon: "💰",
-                title: language === "am" ? "ግልጽ የብር ዋጋ" : "Transparent Pricing",
-                desc: language === "am" ? "በኢትዮጵያ ብር ሙሉ ዋጋ ምንም ተደብቆ የለም — ቴሌብር እና ሲቢኢ ብር ተቀባይ" : "Full ETB pricing, no hidden fees — Telebirr & CBE Birr accepted"
-              },
+              { icon: "🔍", title: language === "am" ? "120-ነጥብ ምርመራ" : "120-Point Inspection", desc: language === "am" ? "እያንዳንዱ መኪና ሙሉ ቴክኒካዊ ምርመራ ካለፈ በኋላ ብቻ ይቀርባል" : "Every car undergoes a full mechanical inspection before listing" },
+              { icon: "⚡", title: language === "am" ? "EV ቀረጥ ነፃ" : "EV Duty-Free", desc: language === "am" ? "ቮልስዋገን ID.4፣ BYD Song Plus — ዜሮ ቀረጥ ኢቪ" : "Volkswagen ID.4, BYD Song Plus — zero excise duty EVs in stock" },
+              { icon: "🏦", title: language === "am" ? "ባንክ ብድር" : "Bank Financing", desc: language === "am" ? "እስከ 70% ብድር፣ 3-5 ዓ.ም ስምምነት" : "Direct CBE & Awash Bank auto loan arrangement, up to 70%, 3-5 yr terms" },
+              { icon: "💰", title: language === "am" ? "ግልጽ የብር ዋጋ" : "Transparent Pricing", desc: language === "am" ? "ቴሌብር እና ሲቢኢ ብር ተቀባይ" : "Full ETB pricing, no hidden fees — Telebirr & CBE Birr accepted" },
             ].map(f => (
               <div key={f.title} className="p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-[#FF8C00]/40 transition">
                 <div className="text-3xl mb-4">{f.icon}</div>
@@ -296,17 +274,11 @@ export const Home: React.FC = () => {
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
-            <a
-              href="tel:+251911223344"
-              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-[#FF8C00] font-bold text-sm hover:bg-orange-50 transition shadow-md"
-            >
+            <a href="tel:+251911223344" className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-[#FF8C00] font-bold text-sm hover:bg-orange-50 transition shadow-md">
               <Phone className="w-4 h-4" />
               <span>+251-91-122-3344</span>
             </a>
-            <Link
-              to="/contact"
-              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white/20 border border-white/40 text-white font-bold text-sm hover:bg-white/30 transition"
-            >
+            <Link to="/contact" className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white/20 border border-white/40 text-white font-bold text-sm hover:bg-white/30 transition">
               {language === "am" ? "ያግኙን" : "Contact Us"}
             </Link>
           </div>
